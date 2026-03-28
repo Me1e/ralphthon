@@ -1,0 +1,50 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+**/node_modules
+/.pnp
+.pnp.js
+
+# testing (Playwright)
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+coverage/
+
+# next.js
+/.next/
+**/.next/
+/out/
+.vercel
+starters/generated-app-v1/data/
+
+# misc
+.DS_Store
+*.pem
+prompt4agent_example.txt
+.references/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# local env files
+.env*.local
+.env
+
+# typescript
+*.tsbuildinfo
+**/dist
+.tacigent/
+
+# IDE / Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/

@@ -1,0 +1,4 @@
+node_modules
+.next
+.codexignore
+prompt4agent_example.txt
