@@ -26,29 +26,26 @@ export default async function LoginPage() {
         </div>
         <div className="space-y-4 text-lg leading-8 text-muted">
           <p>
-            Turn the first AI buyer review from a Slack fire drill into a cited
-            packet.
+            첫 AI 구매 심사를 Slack 긴급 대응이 아니라, 근거가 정리된 패킷으로
+            바꾸세요.
           </p>
           <p>
-            The desk is seeded with one ready review and one blocked review so
-            the demo can show both proof and gaps.
+            데모에는 바로 발행 가능한 심사 1건과 증빙이 막힌 심사 1건이 들어
+            있어, 근거가 갖춰진 흐름과 비어 있는 흐름을 함께 볼 수 있습니다.
           </p>
         </div>
         <dl className="grid gap-4 sm:grid-cols-2">
           <div className="paper-panel p-5">
-            <dt className="status-ink text-xs text-success">Cited answers</dt>
+            <dt className="status-ink text-xs text-success">근거 첨부 답변</dt>
             <dd className="mt-3 font-serif text-3xl text-foreground">3</dd>
           </div>
           <div className="paper-panel p-5">
-            <dt className="status-ink text-xs text-warning">
-              Blocked follow-up
-            </dt>
+            <dt className="status-ink text-xs text-warning">막힌 후속 항목</dt>
             <dd className="mt-3 font-serif text-3xl text-foreground">1</dd>
           </div>
         </dl>
         <p className="status-ink text-xs text-muted">
-          Demo credentials: {DEMO_CREDENTIALS.email} /{" "}
-          {DEMO_CREDENTIALS.password}
+          데모 계정: {DEMO_CREDENTIALS.email} / {DEMO_CREDENTIALS.password}
         </p>
       </section>
       <LoginForm />

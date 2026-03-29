@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/questionnaires", label: "Review Queue" },
-  { href: "/systems", label: "Systems" },
-  { href: "/evidence", label: "Evidence" },
+  { href: "/questionnaires", label: "심사 대기열" },
+  { href: "/systems", label: "시스템" },
+  { href: "/evidence", label: "증빙" },
 ];
 
 export function AppShell({
@@ -26,14 +26,15 @@ export function AppShell({
         <div className="ruled-divider pb-5">
           <p className="status-ink text-xs text-muted">Proofline</p>
           <h1 className="mt-3 font-serif text-3xl text-foreground">
-            Review desk
+            심사 데스크
           </h1>
           <p className="mt-3 text-sm leading-6 text-muted">
-            Turn AI buyer reviews into cited packets without uncited answers.
+            AI 구매 심사를 근거가 붙은 패킷으로 정리하고, 근거 없는 답변은
+            밖으로 나가지 않게 합니다.
           </p>
         </div>
 
-        <nav aria-label="Primary" className="flex flex-col gap-2">
+        <nav aria-label="기본 메뉴" className="flex flex-col gap-2">
           {navItems.map((item) => {
             const active = currentPath.startsWith(item.href);
 
@@ -55,9 +56,9 @@ export function AppShell({
         </nav>
 
         <div className="mt-auto space-y-2 rounded-[10px] border border-border bg-background/70 p-4">
-          <p className="status-ink text-xs text-muted">Operator</p>
+          <p className="status-ink text-xs text-muted">담당자</p>
           <p className="text-sm font-medium text-foreground">{userLabel}</p>
-          <p className="text-sm text-muted">Seeded local Better Auth session</p>
+          <p className="text-sm text-muted">로컬 Better Auth 데모 세션</p>
         </div>
       </aside>
 

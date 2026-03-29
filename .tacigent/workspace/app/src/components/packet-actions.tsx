@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 export function PacketActions({ reviewId }: { reviewId: string }) {
-  const [copyLabel, setCopyLabel] = useState("Copy Share Link");
+  const [copyLabel, setCopyLabel] = useState("공유 링크 복사");
 
   async function handleCopyLink() {
     await navigator.clipboard.writeText(window.location.href);
-    setCopyLabel("Link Copied");
-    window.setTimeout(() => setCopyLabel("Copy Share Link"), 1800);
+    setCopyLabel("링크 복사 완료");
+    window.setTimeout(() => setCopyLabel("공유 링크 복사"), 1800);
   }
 
   return (
@@ -25,7 +25,7 @@ export function PacketActions({ reviewId }: { reviewId: string }) {
         className="inline-flex h-11 items-center justify-center rounded-[10px] border border-border px-4 text-sm font-semibold text-foreground transition hover:bg-foreground/5"
         href={`/questionnaires/${reviewId}`}
       >
-        Back to Review
+        심사 화면으로 돌아가기
       </Link>
     </div>
   );

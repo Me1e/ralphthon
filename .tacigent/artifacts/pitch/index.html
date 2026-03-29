@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Proofline Pitch</title>
+    <title>Proofline 피치</title>
     <style>
       :root {
         --bone: #f4efe4;
@@ -315,340 +315,194 @@
   <body>
     <main class="deck">
       <section class="slide">
-        <div class="kicker">Proofline / Recommendation</div>
-        <h1>Back Proofline as a six-week test for AI buyer-review ops.</h1>
+        <div class="kicker">Proofline / 발표 개요</div>
+        <h1>AI buyer review에서 근거 없는 답변이 밖으로 나가지 않게 하는 워크스페이스</h1>
         <p class="lede">
-          Approve one six-week sprint: 10 customer conversations, 3 live
-          teardowns, and 3 product upgrades. Do not fund a broad launch until
-          two design partners run real buyer reviews through the product.
+          오늘 발표는 세 가지로 정리됩니다. 누구의 어떤 문제를 푸는지,
+          Proofline이 그 문제를 어떻게 해결하는지, 그리고 지금 어디까지
+          실제로 만들었는지 보여드립니다.
         </p>
         <div class="grid-3" style="margin-top: 28px;">
           <div class="stat">
-            <div class="metric-label">Ask</div>
-            <strong>6 weeks</strong>
-            <p class="muted">Validation sprint, not a broad go-to-market launch.</p>
+            <div class="metric-label">대상</div>
+            <strong>20-200명</strong>
+            <p class="muted">엔터프라이즈에 판매 중이지만 전담 GRC 담당자가 없는 AI SaaS 팀</p>
           </div>
           <div class="stat">
-            <div class="metric-label">Proof</div>
-            <strong>1 pass</strong>
-            <p class="muted">Production smoke covers login, queue, review room, publish, and packet.</p>
+            <div class="metric-label">순간</div>
+            <strong>첫 심사</strong>
+            <p class="muted">첫 serious AI buyer review가 딜 중간에 들어오는 순간</p>
           </div>
           <div class="stat">
-            <div class="metric-label">Target</div>
-            <strong>2 partners</strong>
-            <p class="muted">Two design partners are enough to confirm or kill this entry point.</p>
+            <div class="metric-label">데모</div>
+            <strong>실행 가능</strong>
+            <p class="muted">로그인부터 심사실, 패킷 발행까지 실제 흐름을 바로 보여줄 수 있음</p>
           </div>
         </div>
         <div class="callout">
-          <strong>Decision:</strong> keep Proofline, but only as a six-week
-          product test on a deal-cycle problem.
-        </div>
-        <div class="footnote">
-          Source classes: build artifacts + live refreshed official and vendor sources.
+          <strong>한 문장 정의:</strong> Proofline은 AI buyer review 답변을
+          근거 패킷으로 바꾸고, 근거 없는 답변은 발송되지 않게 막는 제품입니다.
         </div>
       </section>
 
       <section class="slide">
-        <div class="kicker">Problem</div>
-        <h2>The pain is not “compliance” in the abstract. It is a live enterprise deal waiting on uncited AI answers.</h2>
+        <div class="kicker">문제 정의</div>
+        <h2>문제는 “컴플라이언스 관리”가 아니라, 딜 진행 중 들어온 AI 질문에 답할 시스템이 없다는 것입니다.</h2>
         <div class="grid-2" style="margin-top: 26px;">
           <div class="panel">
+            <div class="eyebrow">누구의 문제인가</div>
+            <h3>소규모 AI SaaS 운영팀</h3>
             <p>
-              The narrow customer is a small AI SaaS team selling into
-              mid-market or enterprise accounts without a dedicated GRC owner.
-              The moment of pain arrives when procurement, security, or legal
-              asks AI-specific questions in an active deal.
+              예를 들어 운영 리드나 보안 담당자가 buyer review를 떠안습니다.
+              하지만 정식 trust 팀은 없고, 질문이 들어올 때마다 즉석 대응으로 버팁니다.
             </p>
             <ul class="bullet-list">
-              <li>Slack threads replace a real response process.</li>
-              <li>Answers are assembled from memory and stale docs.</li>
-              <li>Missing proof is discovered late, after the buyer is already waiting.</li>
+              <li>procurement, security, legal 질문이 딜 중간에 갑자기 들어옵니다.</li>
+              <li>답변은 Slack, Notion, 오래된 spec에서 급히 모읍니다.</li>
+              <li>누가 어떤 근거로 답했는지 추적이 어렵습니다.</li>
             </ul>
           </div>
           <div class="panel">
-            <div class="eyebrow">Working diagnosis</div>
-            <h3>The cost shows up in the deal, not in a dashboard.</h3>
+            <div class="eyebrow">왜 아픈가</div>
+            <h3>답변이 늦어지면 딜과 신뢰가 같이 흔들립니다.</h3>
             <p>
-              The commercial case here is an inference from where the work
-              happens. If the answer packet stalls in an active deal, the team
-              loses time, trust, or both.
+              이 문제는 일회성 문서 작업이 아닙니다. 엔터프라이즈 판매를 하는 팀이라면
+              buyer question이 들어올 때마다 반복됩니다. 그리고 한 번 막히면
+              영업 속도와 신뢰가 함께 떨어집니다.
             </p>
             <ul class="bullet-list">
-              <li><strong>Revenue risk:</strong> the review happens inside a live sales cycle.</li>
-              <li><strong>Process risk:</strong> early AI reviews are often handled ad hoc.</li>
-              <li><strong>Tool gap:</strong> existing trust tools help later, but many teams still lack a first-response workspace.</li>
+              <li><strong>자주 겪음:</strong> 엔터프라이즈 딜이 진행될수록 questionnaire와 trust review가 반복됩니다.</li>
+              <li><strong>고통이 큼:</strong> 질문 하나가 legal/security 검토를 멈추게 할 수 있습니다.</li>
+              <li><strong>본질적 문제:</strong> 답변이 아니라 “근거가 붙은 답변”을 만드는 운영 체계가 없습니다.</li>
             </ul>
           </div>
         </div>
         <div class="callout">
-          <strong>Why now:</strong> the timing is concrete. The European
-          Commission still points to August 2, 2026 for most AI Act rules, the
-          Council of the EU is still refining implementation, and adjacent
-          vendors are already selling into this behavior.
+          <strong>예시 장면:</strong> Helix Bank가 “승인 없이 규제 대상 답변이 나가지 않는다는 증빙을 보여달라”고 묻는 순간,
+          팀은 답변 문장보다 먼저 증빙 소유자와 근거 문서를 찾아야 합니다. 이때 운영 체계가 없으면 딜이 멈춥니다.
         </div>
-        <div class="flow" style="margin-top: 18px;">
+      </section>
+
+      <section class="slide">
+        <div class="kicker">솔루션</div>
+        <h2>Proofline은 buyer question을 시스템과 증빙에 연결해, 최종 답변을 buyer packet으로 발행하는 심사 워크플로우입니다.</h2>
+        <div class="flow">
           <div class="flow-step">
             <div class="eyebrow">1</div>
-            <h3>Regulatory clock</h3>
-            <p>European Commission guidance still points to August 2, 2026 for most AI Act rules.</p>
+            <h3>심사 대기열</h3>
+            <p>들어온 review를 보고 무엇이 발행 가능하고 무엇이 막혀 있는지 바로 구분합니다.</p>
           </div>
           <div class="flow-step">
             <div class="eyebrow">2</div>
-            <h3>Buyer pressure</h3>
-            <p>Inference: a fixed deadline plus still-moving implementation details usually pulls buyer questions earlier.</p>
+            <h3>심사실</h3>
+            <p>질문을 실제 시스템, 문서, 정책, 명세와 연결해 답변을 정리합니다.</p>
           </div>
           <div class="flow-step">
             <div class="eyebrow">3</div>
-            <h3>What the market sells</h3>
-            <p>Vanta, Drata, and Conveyor are all selling adjacent AI questionnaire workflows right now.</p>
+            <h3>공백 해결</h3>
+            <p>증빙이 없으면 그냥 추정하지 않고, gap task로 남겨 부족한 부분을 드러냅니다.</p>
           </div>
           <div class="flow-step">
             <div class="eyebrow">4</div>
-            <h3>Window to test</h3>
-            <p>The opportunity is to validate the first-response workspace before this job is absorbed by broader trust stacks.</p>
-          </div>
-        </div>
-        <div class="footnote">
-          Sources: European Commission AI Act pages; Council of the EU release on March 13, 2026; Vanta, Drata, Conveyor product pages. Buyer-pressure claim is inferred from those sources, not directly measured.
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Build Proof</div>
-        <h2>What we built already works from login to buyer packet.</h2>
-        <p class="lede">
-          This is not a stitched mock. The app passes production smoke and the
-          screenshots below were taken from the verified build.
-        </p>
-        <div class="shots">
-          <figure class="shot">
-            <img src="./assets/queue.png" alt="Proofline review queue" />
-            <figcaption>Review queue with ready and blocked review paths.</figcaption>
-          </figure>
-          <figure class="shot">
-            <img src="./assets/review-room.png" alt="Proofline review room" />
-            <figcaption>Review room with question context, evidence, and gap tasks.</figcaption>
-          </figure>
-          <figure class="shot">
-            <img src="./assets/packet.png" alt="Proofline buyer packet" />
-            <figcaption>Buyer-facing packet published from the review room.</figcaption>
-          </figure>
-          <div class="panel">
-            <div class="eyebrow">Verification</div>
-            <h3>All green.</h3>
-            <ul class="bullet-list">
-              <li><code>pnpm run typecheck</code> passed</li>
-              <li><code>pnpm run lint</code> passed</li>
-              <li><code>pnpm run smoke</code> passed</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Product Thesis</div>
-        <h2>Proofline is different because uncited answers cannot quietly ship.</h2>
-        <div class="flow">
-          <div class="flow-step">
-            <div class="eyebrow">Input</div>
-            <h3>Buyer question</h3>
-            <p>One live AI diligence question enters the desk.</p>
-          </div>
-          <div class="flow-step">
-            <div class="eyebrow">Mapping</div>
-            <h3>System + proof</h3>
-            <p>The team links the question to a system and to evidence, not memory.</p>
-          </div>
-          <div class="flow-step">
-            <div class="eyebrow">Constraint</div>
-            <h3>Gap or citation</h3>
-            <p>Missing proof becomes a gap task instead of a soft guess.</p>
-          </div>
-          <div class="flow-step">
-            <div class="eyebrow">Output</div>
-            <h3>Buyer packet</h3>
-            <p>The answer is published as a cited packet that the buyer can review.</p>
+            <h3>패킷 발행</h3>
+            <p>모든 질문이 정리되면 바이어가 검토할 수 있는 cited packet으로 발행합니다.</p>
           </div>
         </div>
         <div class="callout">
-          The one-line differentiation: <strong>a workspace for AI buyer reviews
-          where answers need proof before they ship.</strong>
+          <strong>차별점:</strong> 대부분의 도구가 “questionnaire 자동화”를 돕는다면,
+          Proofline은 “근거 없는 답변이 나가지 않게 막는 운영 화면”을 제공합니다.
         </div>
       </section>
 
       <section class="slide">
-        <div class="kicker">ICP + GTM</div>
-        <h2>The first customer is a 20-200 person AI SaaS team, and the first sales play is a live review teardown.</h2>
-        <div class="grid-2" style="margin-top: 26px;">
-          <div class="card">
-            <div class="eyebrow">Primary cell</div>
-            <h3>AI SaaS selling into enterprise</h3>
-            <ul class="bullet-list">
-              <li>No dedicated GRC owner</li>
-              <li>First serious AI buyer review lands mid-deal</li>
-              <li>Needs speed, not a full trust transformation</li>
-            </ul>
-          </div>
-          <div class="card">
-            <div class="eyebrow">Supporting cell</div>
-            <h3>Fractional security / GRC consultants</h3>
-            <ul class="bullet-list">
-              <li>Repeated questionnaire fire drills across startup clients</li>
-              <li>Need one repeatable response workflow</li>
-              <li>Can become an efficient partner channel</li>
-            </ul>
-          </div>
-        </div>
+        <div class="kicker">현재 진행 상황</div>
+        <h2>핵심 워크플로우는 이미 end-to-end로 구현되어 있고, 데모 가능한 상태입니다.</h2>
         <div class="grid-3" style="margin-top: 24px;">
           <div class="card">
-            <div class="eyebrow">Channel</div>
-            <h3>Founder outbound</h3>
-            <p>Target AI SaaS teams already selling to enterprise buyers.</p>
+            <div class="eyebrow">구현 완료</div>
+            <h3>동작하는 제품</h3>
+            <ul class="bullet-list">
+              <li>Better Auth 로그인</li>
+              <li>심사 대기열 / 심사실 / 패킷 화면</li>
+              <li>시스템 / 증빙 / 공백 해결 작업</li>
+              <li>발행 잠금과 패킷 스냅샷</li>
+            </ul>
           </div>
           <div class="card">
-            <div class="eyebrow">Offer</div>
-            <h3>Live teardown</h3>
-            <p>“Bring one recent buyer review. Leave with a packet or a gap list.”</p>
+            <div class="eyebrow">검증</div>
+            <h3>기술 완성도</h3>
+            <ul class="bullet-list">
+              <li><code>typecheck</code> 통과</li>
+              <li><code>lint</code> 통과</li>
+              <li><code>build</code> 통과</li>
+              <li><code>smoke</code> 통과</li>
+            </ul>
           </div>
           <div class="card">
-            <div class="eyebrow">Partner</div>
-            <h3>Fractional GRC</h3>
-            <p>Use consultants as repeat-entry operators rather than broad channel spend.</p>
+            <div class="eyebrow">다음 단계</div>
+            <h3>바로 이어질 작업</h3>
+            <ul class="bullet-list">
+              <li>questionnaire import</li>
+              <li>persistent domain data</li>
+              <li>collaboration notes</li>
+              <li>실제 design partner 검증</li>
+            </ul>
           </div>
         </div>
-        <div class="callout">
-          First sprint scoreboard: 10 conversations, 3 live teardowns, 2 design
-          partners, 1 pilot with explicit budget ownership or consultant-backed
-          usage.
+        <div class="shots">
+          <figure class="shot">
+            <img src="./assets/queue.png" alt="Proofline 심사 대기열" />
+            <figcaption>대기열에서 ready review와 blocked review를 한 번에 비교할 수 있습니다.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/review-room.png" alt="Proofline 심사실" />
+            <figcaption>심사실에서 질문, 증빙, 공백 해결 작업이 한 화면에 모입니다.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/packet.png" alt="Proofline 바이어 패킷" />
+            <figcaption>최종 결과물은 buyer-facing packet으로 발행됩니다.</figcaption>
+          </figure>
+          <div class="panel">
+            <div class="eyebrow">오늘 보여줄 것</div>
+            <h3>3분 데모</h3>
+            <ul class="bullet-list">
+              <li>로그인</li>
+              <li>심사 대기열 확인</li>
+              <li>심사실에서 질문/증빙 확인</li>
+              <li>패킷 발행 및 결과 확인</li>
+            </ul>
+          </div>
         </div>
       </section>
 
       <section class="slide">
-        <div class="kicker">Market Map</div>
-        <h2>Incumbents prove the market exists, but they sell a broader trust stack.</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Vendor</th>
-              <th>What they optimize</th>
-              <th>Where Proofline enters</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Vanta</td>
-              <td>Broader trust + questionnaire automation</td>
-              <td>Before the program is mature enough for a full trust stack</td>
-            </tr>
-            <tr>
-              <td>Drata / SafeBase</td>
-              <td>Compliance and AI questionnaire assistance</td>
-              <td>In the first live AI buyer review when response discipline is still ad hoc</td>
-            </tr>
-            <tr>
-              <td>Conveyor</td>
-              <td>AI questionnaire automation at scale</td>
-              <td>Around proof-state management and the review-room narrative</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="callout">
-          Proofline does not need to beat these systems everywhere. It needs to
-          win one early, painful step well enough to earn the right to expand.
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Objections + Ask</div>
-        <h2>The likely objections are real, and the next six weeks should prove or kill the idea quickly.</h2>
-        <div class="grid-3" style="margin-top: 22px;">
-          <div class="card">
-            <div class="eyebrow">VC objection</div>
-            <h3>Incumbents can absorb this.</h3>
-            <p>The defense is not to out-platform them now. It is to prove that the first-response workspace wins before a team commits to a broader trust stack.</p>
-          </div>
-          <div class="card">
-            <div class="eyebrow">SaaS objection</div>
-            <h3>This might be a feature.</h3>
-            <p>If teams mainly want import into an incumbent stack, this should not stand alone. That is why questionnaire import is the first upgrade in the sprint.</p>
-          </div>
-          <div class="card">
-            <div class="eyebrow">Engineering objection</div>
-            <h3>The demo is still early.</h3>
-            <p>Correct. The product proves the workflow today. The next sprint needs to add persistence, collaboration, and import before any bigger readiness claim.</p>
-          </div>
-        </div>
-        <div class="callout">
-          This is why the recommendation is a validation sprint, not a budget-heavy launch.
-        </div>
+        <div class="kicker">데모 가이드</div>
+        <h2>데모는 문제 → 해결 → 결과 순서로 3분 안에 끝내는 것이 가장 설득력 있습니다.</h2>
         <div class="ask-box">
           <div class="panel">
-            <div class="eyebrow">Sprint outputs</div>
+            <div class="eyebrow">클릭 순서</div>
             <ul class="bullet-list">
-              <li>10 customer and operator conversations</li>
-              <li>3 live buyer-review teardowns</li>
-              <li>2 design partners</li>
-              <li>1 pilot with explicit budget ownership or consultant-sponsored usage</li>
+              <li>1. <code>http://127.0.0.1:3010/login</code>에서 로그인</li>
+              <li>2. 심사 대기열에서 <strong>Acme 구매 심사</strong>와 <strong>Helix Bank 신뢰 심사</strong>를 비교</li>
+              <li>3. 발행 가능한 Acme 심사를 열고 질문, 증빙, 시스템 연결 구조 설명</li>
+              <li>4. <strong>패킷 발행</strong>을 눌러 buyer packet 결과 화면으로 이동</li>
+              <li>5. 시간이 남으면 Helix 심사를 열어 blocked 상태와 gap task를 보여주기</li>
             </ul>
           </div>
           <div class="panel">
-            <div class="eyebrow">Build next</div>
-            <p><span class="pill">Questionnaire import</span></p>
-            <p><span class="pill">Persistent domain data</span></p>
-            <p><span class="pill">Collaboration notes</span></p>
+            <div class="eyebrow">말할 포인트</div>
+            <ul class="bullet-list">
+              <li>“이 화면은 지금 어떤 심사가 막혀 있고 무엇이 발행 가능한지 보여줍니다.”</li>
+              <li>“질문은 그냥 답하는 게 아니라 시스템과 증빙에 연결됩니다.”</li>
+              <li>“증빙이 없으면 추정하지 않고 공백 해결 작업으로 남깁니다.”</li>
+              <li>“모든 질문이 정리되면 바로 바이어 패킷으로 발행됩니다.”</li>
+            </ul>
           </div>
         </div>
         <div class="callout">
-          Kill the direction if fewer than two teams will run a real review
-          through the product, or if they consistently prefer incumbent tooling
-          without needing a dedicated review room.
+          <strong>발표 팁:</strong> 기능 목록보다 장면 전환에 집중하세요.
+          대기열에서는 “무엇이 막혔는가”, 심사실에서는 “무엇이 근거인가”, 패킷에서는 “무엇을 바이어에게 보내는가”만 말하면 됩니다.
         </div>
-      </section>
-
-      <section class="slide">
-        <div class="kicker">Appendix</div>
-        <h2>The major claims are mapped to sources, not hand-waving.</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Source</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Most AI Act rules apply on August 2, 2026</td>
-              <td>European Commission AI Act pages</td>
-              <td>Verified</td>
-            </tr>
-            <tr>
-              <td>There is live implementation uncertainty in March 2026</td>
-              <td>Council of the EU, March 13, 2026</td>
-              <td>Verified</td>
-            </tr>
-            <tr>
-              <td>The August 2 date is likely to increase buyer diligence</td>
-              <td>Inference from official timeline, Council update, and vendor activity</td>
-              <td>Inferred</td>
-            </tr>
-            <tr>
-              <td>The category is commercially active</td>
-              <td>Vanta, Drata, Conveyor product pages</td>
-              <td>Supported</td>
-            </tr>
-            <tr>
-              <td>Proofline has a working end-to-end flow</td>
-              <td>Build verification artifacts</td>
-              <td>Verified</td>
-            </tr>
-            <tr>
-              <td>This first-review entry point can become a business</td>
-              <td>Stage synthesis</td>
-              <td>Inferred</td>
-            </tr>
-          </tbody>
-        </table>
       </section>
     </main>
   </body>

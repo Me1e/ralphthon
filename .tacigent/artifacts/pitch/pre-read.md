@@ -1,12 +1,12 @@
-# Recommendation
+# 추천안
 
-Recommend that we keep **Proofline** and approve a **six-week validation sprint**. The ask is specific: run 10 customer conversations, 3 live buyer-review teardowns, and 3 product upgrades: questionnaire import, persistent domain data, and collaboration notes. Do not fund a broad launch yet. Fund one sprint to answer a narrower question: when an AI SaaS team gets its first serious buyer review, will it pay for a workspace that turns scattered answers into a cited packet fast enough to protect the deal?
+**Proofline**을 유지하고 **6주 검증 스프린트**를 승인하는 것이 맞습니다. 요청사항은 명확합니다. 고객 대화 10건, 라이브 buyer-review teardown 3건, 제품 업그레이드 3가지를 진행합니다: questionnaire import, persistent domain data, collaboration notes. 지금 바로 넓게 출시하면 안 됩니다. 대신 한 가지 더 좁은 질문에 답해야 합니다. AI SaaS 팀이 첫 serious buyer review를 받았을 때, 흩어진 답변을 근거가 붙은 패킷으로 빠르게 바꿔 딜을 지키는 워크스페이스에 실제로 돈을 낼 것인가?
 
-## Why This Problem, Now
+## 왜 지금 이 문제인가
 
-As of **March 29, 2026**, the European Commission still states that most AI Act rules apply on **August 2, 2026**. At the same time, the Council of the EU adopted a position on **March 13, 2026** to streamline implementation. The market implication is an inference, not a verified demand statistic: a fixed compliance date plus still-moving implementation details is a plausible trigger for more buyer questions before deals close.
+**2026년 3월 29일** 기준으로, European Commission은 AI Act의 대부분 규정이 **2026년 8월 2일**에 적용된다고 안내하고 있습니다. 동시에 Council of the EU는 **2026년 3월 13일**에 이행 단순화 관련 입장을 채택했습니다. 이 조합이 곧바로 검증된 수요 통계는 아닙니다. 다만, 고정된 규제 일정과 아직 정리 중인 이행 기준이 함께 있으면 딜이 닫히기 전에 buyer question이 더 앞당겨질 가능성은 충분히 있습니다.
 
-Sources:
+출처:
 
 - European Commission, Regulatory framework on AI:
   https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai
@@ -15,9 +15,9 @@ Sources:
 - Council of the EU, March 13, 2026 AI simplification position:
   https://www.consilium.europa.eu/en/press/press-releases/2026/03/13/council-agrees-position-to-streamline-rules-on-artificial-intelligence/
 
-This is not only about regulation. It is also about what the market is already selling. Vanta, Drata, and Conveyor are all selling AI-oriented questionnaire or trust-response workflows. That supports the claim that buyers and vendors are already spending attention here. Their positioning is broader: trust management, compliance, or questionnaire automation across a larger program. Proofline is earlier and narrower. It is built for the first serious AI buyer review, when a small team still has no clean answer process.
+이건 규제만의 이야기가 아닙니다. 시장이 이미 무엇을 파는지도 중요합니다. Vanta, Drata, Conveyor는 모두 AI 관련 questionnaire 또는 trust response workflow를 판매하고 있습니다. 이 사실은 buyers와 vendors가 이미 이 영역에 시간을 쓰고 있다는 점을 뒷받침합니다. 다만 이들의 포지셔닝은 더 넓습니다. trust management, compliance, questionnaire automation 전반입니다. Proofline은 더 앞단의 더 좁은 순간을 노립니다. 작은 팀이 아직 제대로 된 answer process를 갖추기 전, 첫 serious AI buyer review를 처리하는 순간입니다.
 
-Sources:
+출처:
 
 - Vanta Questionnaire Automation:
   https://www.vanta.com/products/questionnaire-automation
@@ -26,156 +26,156 @@ Sources:
 - Conveyor Security Questionnaire Automation:
   https://www.conveyor.com/platform/security-questionnaire-automation-software
 
-## What We Built
+## 지금 만든 것
 
-Proofline is a local web product with:
+Proofline은 로컬 웹 제품입니다. 아래 흐름이 실제로 동작합니다.
 
-- Better Auth local credential sign-in backed by SQLite
-- a review queue
-- a three-column review room
-- linked systems and evidence
-- gap-task creation
-- buyer-packet publishing
+- Better Auth 로컬 계정 로그인 + SQLite
+- 심사 대기열
+- 3단 컬럼 심사실
+- 시스템/증빙 연결
+- 공백 해결 작업 생성
+- 바이어 패킷 발행
 
-The important point is not that every enterprise feature exists. It does not. The important point is that the product already demonstrates the exact movement we are claiming:
+중요한 점은 기능이 다 갖춰졌다는 게 아닙니다. 그렇지 않습니다. 중요한 건 우리가 주장하는 흐름이 코드에서 실제로 재현된다는 점입니다.
 
-1. open a live buyer review
-2. inspect each question against systems and evidence
-3. make missing proof explicit
-4. publish a cited packet
+1. 라이브 buyer review를 연다
+2. 각 질문을 시스템과 증빙 기준으로 확인한다
+3. 부족한 증빙을 명시적으로 드러낸다
+4. 근거가 붙은 패킷을 발행한다
 
-Verification evidence:
+검증 근거:
 
-- `pnpm run typecheck` passed
-- `pnpm run lint` passed
-- `pnpm run smoke` passed in production mode
+- `pnpm run typecheck` 통과
+- `pnpm run lint` 통과
+- `pnpm run smoke` production mode 기준 통과
 
-The smoke path covered login, queue, review room, packet publish, and buyer packet render.
+smoke 경로는 login, queue, review room, packet publish, buyer packet render를 포함합니다.
 
-## Why This Approach Is Different Enough
+## 왜 접근이 다른가
 
-The one-sentence differentiation is:
+한 문장 차별점은 이렇습니다.
 
-> Proofline is a workspace for AI buyer reviews where answers need proof before they ship.
+> Proofline은 AI buyer review 답변이 근거 없이 발송되지 않도록 막는 워크스페이스다.
 
-That matters because most alternatives optimize one of two adjacent jobs:
+이게 중요한 이유는, 기존 대안 대부분이 아래 둘 중 하나를 최적화하기 때문입니다.
 
-- broad trust / compliance system management
-- generic questionnaire automation at scale
+- 넓은 trust / compliance 운영
+- 규모 있는 questionnaire automation
 
-Proofline instead focuses on the **first review decision**. Each buyer question is forced into a bounded state:
+반면 Proofline은 **첫 심사 판단**에 집중합니다. 각 buyer question은 세 상태 중 하나로 강제됩니다.
 
-- cited
-- needs review
-- blocked
+- 근거 첨부
+- 검토 필요
+- 차단됨
 
-That gives the product a sharper demo and a clearer adoption story. It also points to the next set of jobs:
+이 구조 덕분에 데모가 훨씬 선명해지고, 도입 스토리도 명확해집니다. 그리고 다음으로 확장할 일도 자연스럽게 보입니다.
 
 - questionnaires
 - systems
 - evidence
 - packets
-- then, later, imports, collaboration, and integrations
+- 이후 import, collaboration, integrations
 
-That is the part I expect the platform-minded judges to care about. You can already see the sequence in the build, even though the product is still small.
+플랫폼 관점의 심사위원이 볼 포인트는 이 부분입니다. 아직 제품은 작지만, 확장 순서는 이미 보입니다.
 
-## Why This Can Be A Real Business
+## 왜 사업이 될 수 있나
 
-The entry point is small, but it sits close to revenue. That is an inference from where the workflow happens: inside an active sales process, not in a detached internal compliance cycle.
+진입점은 작습니다. 하지만 revenue에 가깝습니다. 이건 워크플로우가 어디에서 일어나는지에서 나오는 추론입니다. 내부 컴플라이언스 정리 업무가 아니라, 실제 영업 딜 한복판에서 벌어지는 일입니다.
 
-If a team misses a buyer questionnaire in the middle of a sales process, the cost is not just extra paperwork. The likely cost is a slower deal, a weaker trust posture, or both. That is why this entry point is commercially more serious than a generic internal compliance tool.
+세일즈 중간에 buyer questionnaire를 놓치면 비용은 단순한 문서 작업이 아닙니다. 더 느린 딜, 더 약한 신뢰, 혹은 둘 다일 가능성이 큽니다. 그래서 이 진입점은 일반적인 내부 컴플라이언스 툴보다 상업적으로 더 중요할 수 있습니다.
 
-The expansion path is also believable:
+확장 경로도 자연스럽습니다.
 
-1. first review rescue
-2. repeated review operations
-3. system-level evidence graph
-4. integrations with trust / GRC stack
-5. recurring team workflow
+1. 첫 심사 구조화
+2. 반복 심사 운영
+3. 시스템 단위 evidence graph
+4. trust / GRC stack 연동
+5. 반복 팀 워크플로우
 
-That does not prove venture scale today. It proves there is a path worth testing.
+이게 곧바로 벤처 스케일을 증명하는 것은 아닙니다. 다만 테스트할 가치가 있는 경로는 보여줍니다.
 
-## Recommended GTM
+## 권장 GTM
 
-Do not launch broadly. Do not buy demand. Do not pretend we have a mature platform.
+넓게 출시하지 마세요. 광고로 수요를 만들려 하지 마세요. 성숙한 플랫폼인 척하지 마세요.
 
-Start with one sales play:
+하나의 sales play부터 시작하는 게 맞습니다.
 
-- target 20-200 person AI SaaS teams selling to enterprise buyers without dedicated GRC staff
-- offer a live teardown of one recent or active buyer review
-- use the working product to produce either a packet or a gap list
+- 엔터프라이즈에 판매 중이지만 전담 GRC 인력이 없는 20-200명 AI SaaS 팀을 겨냥
+- 최근 또는 진행 중인 buyer review 1건을 가져오게 함
+- 제품 안에서 packet 또는 gap list를 직접 만들게 함
 
-Supporting channel:
+보조 채널:
 
-- recruit one fractional security or GRC consultant who can bring repeated startup clients
+- 반복 고객을 데려올 수 있는 fractional security / GRC consultant 1명을 확보
 
-Success should be measured narrowly:
+성공 기준은 좁게 잡아야 합니다.
 
-- 10 conversations
-- 3 live teardowns
-- 2 design partners
-- 1 pilot with real budget ownership or consultant-sponsored usage
+- 고객 대화 10건
+- 라이브 teardown 3건
+- design partner 2곳
+- 예산 담당자가 있는 pilot 1건 또는 consultant-sponsored usage 1건
 
-## Likely Objections And Responses
+## 예상 반론과 답변
 
-### VC objection: incumbents can absorb this
+### VC 관점 반론: incumbents가 이 기능을 흡수할 수 있다
 
-That is a real strategic risk. Vanta, Drata, or Conveyor could move earlier if customers pull them there.
+맞는 우려입니다. Vanta, Drata, Conveyor가 고객 요구에 따라 더 앞단으로 들어올 수 있습니다.
 
-Response:
+대응:
 
-- do not try to out-platform them now
-- test whether the first-response workspace gets adopted before a team is ready for a broader trust stack
-- kill the direction if the workflow consistently collapses into incumbent tooling
+- 지금 incumbents와 플랫폼 전체를 경쟁하려고 하면 안 됩니다
+- 팀이 넓은 trust stack으로 들어가기 전에, first-response workspace가 실제로 채택되는지부터 봐야 합니다
+- 이 workflow가 계속 incumbent 안으로 흡수된다면 방향을 접어야 합니다
 
-### B2B SaaS objection: this may be a feature, not a product
+### B2B SaaS 관점 반론: 이건 product가 아니라 feature일 수 있다
 
-Also true. If the workflow happens too rarely, or if teams only want import into an incumbent stack, this should not stand alone.
+이것도 맞는 우려입니다. 이 workflow가 너무 드물거나, 결국 import만 원한다면 독립 제품으로 설 수 없습니다.
 
-Response:
+대응:
 
-- require repeated live teardown demand during the sprint
-- make questionnaire import the first upgrade after validation starts
-- treat consultant-sponsored repeat use as acceptable evidence, but not as the final answer
+- 스프린트 동안 반복적인 live teardown 수요를 반드시 확인해야 합니다
+- validation이 시작되면 첫 업그레이드는 questionnaire import로 가야 합니다
+- consultant를 통한 반복 사용은 좋은 신호이지만, 최종 답은 아닙니다
 
-### Engineering objection: the demo is real, but the product is still early
+### 엔지니어링 관점 반론: 데모는 되지만 제품은 아직 초기다
 
-Correct. The current product proves the workflow, not production maturity.
+맞습니다. 현재 제품은 workflow proof를 보여줄 뿐, production maturity를 증명하지는 않습니다.
 
-Response:
+대응:
 
-- keep claims bounded to what is implemented today
-- note that the stack already covers auth, multi-route flow, publish path, and verification
-- use the next sprint to add persistence, import, and collaboration before claiming broader readiness
+- 오늘 구현된 범위를 넘는 claim은 하지 않습니다
+- 현재도 auth, multi-route flow, publish path, verification은 이미 갖춰져 있습니다
+- 다음 스프린트에서 persistence, import, collaboration을 추가한 뒤 readiness를 다시 말해야 합니다
 
-## Claim And Evidence Mapping
+## Claim / Evidence 매핑
 
 | Claim | Source | Status |
 | --- | --- | --- |
-| Most AI Act rules apply on August 2, 2026 | European Commission AI Act pages | verified |
-| There is still live implementation uncertainty in March 2026 | Council of the EU March 13, 2026 release | verified |
-| The August 2 date is likely to increase buyer diligence before deals close | inference from official timeline + Council update + vendor activity | inferred |
-| The category is commercially active | Vanta, Drata, Conveyor product pages | supported |
-| Proofline has a working end-to-end demo | build.md + verification-report.md | verified |
-| This first-review entry point can become a real business | synthesis from problem, solution, marketing, and build outputs | inferred |
+| AI Act 대부분 규정은 2026년 8월 2일 적용 | European Commission AI Act pages | verified |
+| 2026년 3월에도 이행 불확실성이 남아 있음 | Council of the EU, March 13, 2026 | verified |
+| 8월 2일 일정이 buyer diligence를 앞당길 가능성이 큼 | official timeline + Council update + vendor activity 기반 추론 | inferred |
+| 이 카테고리는 상업적으로 이미 움직이고 있음 | Vanta, Drata, Conveyor product pages | supported |
+| Proofline은 end-to-end demo가 실제로 동작함 | build.md + verification-report.md | verified |
+| 이 first-review 진입점은 사업이 될 수 있음 | problem / solution / marketing / build 종합 추론 | inferred |
 
-## Recommendation
+## 최종 추천
 
-Proceed with Proofline as a narrow product test on one job: help a team answer its first serious AI buyer review with cited evidence. Do not treat it as a scale-ready trust platform until the sprint produces repeat usage and a real pilot.
+Proofline은 하나의 좁은 job에 대한 제품 테스트로 계속 가는 것이 맞습니다. 목표는 “첫 serious AI buyer review를 근거와 함께 답하게 돕는 것”입니다. 스프린트에서 반복 사용과 실제 pilot이 나오기 전까지는 scale-ready trust platform처럼 다루면 안 됩니다.
 
-## Ask
+## 요청
 
-Approve a six-week validation sprint with the following scope:
+아래 범위의 6주 검증 스프린트를 승인해주세요.
 
-1. 10 interviews with AI SaaS operators or founders selling into enterprise
-2. 3 live buyer-review teardowns in the product
-3. 3 build upgrades:
+1. 엔터프라이즈에 판매 중인 AI SaaS 운영자/창업자 인터뷰 10건
+2. 제품 안에서 실제 buyer-review teardown 3건
+3. 제품 업그레이드 3가지
    - questionnaire import
    - persistent domain data
    - collaboration notes
 
-Kill criteria:
+중단 기준:
 
-- fewer than 2 teams agree to run a real review through the product
-- prospects consistently prefer incumbent questionnaire tools with no need for a dedicated review room
-- import / ingestion proves more important than the proof workflow itself
+- 실제 심사를 제품 안으로 넣겠다는 팀이 2곳 미만
+- 전용 review room 없이 incumbent questionnaire tool이면 충분하다는 반응이 반복됨
+- proof workflow보다 import / ingestion이 훨씬 중요하다는 신호가 강함

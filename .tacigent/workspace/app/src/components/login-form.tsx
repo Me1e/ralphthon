@@ -22,7 +22,7 @@ export function LoginForm() {
         const password = formData.get("password");
 
         if (typeof email !== "string" || typeof password !== "string") {
-          setErrorMessage("Use the seeded demo credentials.");
+          setErrorMessage("미리 준비된 데모 계정을 사용해주세요.");
           return;
         }
 
@@ -34,7 +34,7 @@ export function LoginForm() {
           });
 
           if (result.error) {
-            setErrorMessage("Sign-in failed. Use the seeded demo account.");
+            setErrorMessage("로그인에 실패했습니다. 데모 계정을 사용해주세요.");
             setIsPending(false);
             return;
           }
@@ -46,9 +46,9 @@ export function LoginForm() {
       }}
     >
       <div className="ruled-divider pb-4">
-        <p className="status-ink text-xs text-muted">Seeded login</p>
+        <p className="status-ink text-xs text-muted">데모 로그인</p>
         <h2 className="mt-2 font-serif text-3xl text-foreground">
-          Enter the review desk
+          심사 데스크로 들어가기
         </h2>
       </div>
 
@@ -56,7 +56,7 @@ export function LoginForm() {
         className="flex flex-col gap-2 text-sm font-medium text-foreground"
         htmlFor="email"
       >
-        Email
+        이메일
         <input
           className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-base text-foreground"
           defaultValue="demo@proofline.app"
@@ -72,7 +72,7 @@ export function LoginForm() {
         className="flex flex-col gap-2 text-sm font-medium text-foreground"
         htmlFor="password"
       >
-        Password
+        비밀번호
         <input
           className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-base text-foreground"
           defaultValue="proofline-demo"
@@ -98,7 +98,7 @@ export function LoginForm() {
         disabled={isPending}
         type="submit"
       >
-        {isPending ? "Signing In" : "Sign In"}
+        {isPending ? "로그인 중" : "로그인"}
       </button>
     </form>
   );

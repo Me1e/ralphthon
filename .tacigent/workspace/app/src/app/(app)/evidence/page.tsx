@@ -12,15 +12,17 @@ export default async function EvidencePage() {
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
       <section className="paper-panel overflow-hidden">
         <div className="ruled-divider px-6 py-5">
-          <p className="status-ink text-xs text-muted">Evidence ledger</p>
-          <h2 className="mt-2 font-serif text-4xl text-foreground">Evidence</h2>
+          <p className="status-ink text-xs text-muted">증빙 원장</p>
+          <h2 className="mt-2 font-serif text-4xl text-foreground">증빙</h2>
         </div>
         {evidence.length === 0 ? (
           <div className="px-6 py-10">
-            <p className="font-semibold text-foreground">No evidence yet.</p>
+            <p className="font-semibold text-foreground">
+              아직 등록된 증빙이 없습니다.
+            </p>
             <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
-              Add the policy, spec, or doc that proves an answer. The review
-              room is stronger when evidence exists before the buyer asks.
+              답변을 입증할 정책, 명세, 문서를 추가하세요. 바이어가 묻기 전에
+              증빙이 준비돼 있을수록 심사실이 강해집니다.
             </p>
           </div>
         ) : (
@@ -35,8 +37,14 @@ export default async function EvidencePage() {
                   <p className="mt-2 text-sm text-muted">{item.source}</p>
                 </div>
                 <div className="space-y-2 text-sm text-muted">
-                  <p>{item.type}</p>
-                  <p>{item.linkedSystemIds.length} linked systems</p>
+                  <p>
+                    {item.type === "doc"
+                      ? "문서"
+                      : item.type === "policy"
+                        ? "정책"
+                        : "명세"}
+                  </p>
+                  <p>연결된 시스템 {item.linkedSystemIds.length}개</p>
                 </div>
                 <form action={archiveEvidenceAction}>
                   <input name="id" type="hidden" value={item.id} />
@@ -44,7 +52,7 @@ export default async function EvidencePage() {
                     className="inline-flex h-10 items-center justify-center rounded-[10px] border border-border px-3 text-sm font-medium text-foreground transition hover:bg-foreground/5"
                     type="submit"
                   >
-                    Archive
+                    보관
                   </button>
                 </form>
               </div>
@@ -58,52 +66,52 @@ export default async function EvidencePage() {
         className="paper-panel flex flex-col gap-4 p-6"
       >
         <div className="ruled-divider pb-4">
-          <p className="status-ink text-xs text-muted">Create evidence</p>
+          <p className="status-ink text-xs text-muted">증빙 추가</p>
           <h3 className="mt-2 font-serif text-3xl text-foreground">
-            Add Evidence
+            새 증빙 추가
           </h3>
         </div>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-          Title
+          제목
           <input
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="title"
-            placeholder="Human oversight runbook"
+            placeholder="사람 검토 운영 가이드"
             required
           />
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-          Source
+          출처
           <input
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="source"
-            placeholder="Product requirement memo"
+            placeholder="제품 요구사항 메모"
             required
           />
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-          Type
+          유형
           <select
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="type"
           >
-            <option value="doc">Doc</option>
-            <option value="policy">Policy</option>
-            <option value="spec">Spec</option>
+            <option value="doc">문서</option>
+            <option value="policy">정책</option>
+            <option value="spec">명세</option>
           </select>
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-          Strength
+          강도
           <select
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="strength"
           >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
+            <option value="high">높음</option>
+            <option value="medium">중간</option>
           </select>
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
-          Linked systems
+          연결할 시스템
           <input
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             defaultValue={systems.map((item) => item.id).join(", ")}
@@ -116,7 +124,7 @@ export default async function EvidencePage() {
           className="inline-flex h-11 items-center justify-center rounded-[10px] border border-foreground bg-foreground px-4 text-sm font-semibold text-background transition hover:opacity-90"
           type="submit"
         >
-          Add Evidence
+          증빙 추가
         </button>
       </form>
     </div>

@@ -26,9 +26,9 @@ export default async function PacketPage({
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-8 px-8 py-10">
       <header className="paper-panel p-8">
-        <p className="status-ink text-xs text-muted">Buyer packet</p>
+        <p className="status-ink text-xs text-muted">바이어 패킷</p>
         <h1 className="mt-3 font-serif text-5xl text-foreground">
-          Buyer Packet
+          바이어 패킷
         </h1>
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <StatusChip status="published" />
@@ -42,7 +42,7 @@ export default async function PacketPage({
 
       <section className="paper-panel p-8">
         <div className="ruled-divider pb-5">
-          <p className="status-ink text-xs text-muted">Proof summary</p>
+          <p className="status-ink text-xs text-muted">근거 요약</p>
           <h2 className="mt-2 font-serif text-3xl text-foreground">
             {packet.reviewTitle}
           </h2>
@@ -53,7 +53,7 @@ export default async function PacketPage({
 
         <div className="mt-8 grid gap-8 xl:grid-cols-[240px_minmax(0,1fr)]">
           <aside className="rounded-[10px] border border-border bg-background/70 p-5">
-            <p className="status-ink text-xs text-muted">Table of contents</p>
+            <p className="status-ink text-xs text-muted">목차</p>
             <ol className="mt-4 space-y-3">
               {packet.questions.map((question, index) => (
                 <li key={question.id}>
@@ -72,19 +72,19 @@ export default async function PacketPage({
             {packet.questions.map((question, index) => (
               <section id={question.id} key={question.id} className="space-y-3">
                 <p className="status-ink text-xs text-muted">
-                  Question {index + 1}
+                  질문 {index + 1}
                 </p>
                 <h3 className="font-semibold text-foreground">
                   {question.prompt}
                 </h3>
                 <p className="text-sm leading-7 text-foreground">
-                  {question.answer || "No answer yet."}
+                  {question.answer || "아직 답변이 없습니다."}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {question.citations.map((citation) => (
                     <StatusChip
                       key={citation}
-                      label={`Citation ${citation.replace("evidence-", "")}`}
+                      label={`근거 ${citation.replace("evidence-", "")}`}
                       status="cited"
                     />
                   ))}

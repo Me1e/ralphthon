@@ -84,22 +84,22 @@ const seedState: DemoState = {
     {
       archived: false,
       description:
-        "LLM-powered support drafting with human approval before send.",
+        "LLM이 고객 응답 초안을 만들고, 발송 전에는 반드시 사람이 승인하는 지원 시스템입니다.",
       evidenceCount: 2,
       id: "sys-support-copilot",
       linkedReviews: 2,
-      name: "Support Copilot",
-      owner: "Mina Park",
+      name: "지원 코파일럿",
+      owner: "박민아",
     },
     {
       archived: false,
       description:
-        "Policy classifier for routing inbound tickets with human override.",
+        "정책 분류 모델로 들어오는 티켓을 라우팅하되, 사람이 언제든지 결과를 덮어쓸 수 있습니다.",
       evidenceCount: 2,
       id: "sys-policy-router",
       linkedReviews: 1,
-      name: "Policy Router",
-      owner: "Jules Carter",
+      name: "정책 라우터",
+      owner: "줄스 카터",
     },
   ],
   evidence: [
@@ -107,36 +107,36 @@ const seedState: DemoState = {
       archived: false,
       id: "evidence-oversight",
       linkedSystemIds: ["sys-support-copilot"],
-      source: "Product requirement memo",
+      source: "제품 요구사항 메모",
       strength: "high",
-      title: "Human oversight runbook",
+      title: "사람 검토 운영 가이드",
       type: "policy",
     },
     {
       archived: false,
       id: "evidence-logging",
       linkedSystemIds: ["sys-support-copilot"],
-      source: "Engineering spec",
+      source: "엔지니어링 명세",
       strength: "high",
-      title: "Audit event logging spec",
+      title: "감사 이벤트 로깅 명세",
       type: "spec",
     },
     {
       archived: false,
       id: "evidence-boundaries",
       linkedSystemIds: ["sys-policy-router"],
-      source: "Security review",
+      source: "보안 검토 문서",
       strength: "medium",
-      title: "Model boundary and escalation note",
+      title: "모델 경계 및 에스컬레이션 메모",
       type: "doc",
     },
     {
       archived: false,
       id: "evidence-eval",
       linkedSystemIds: ["sys-policy-router"],
-      source: "QA sheet",
+      source: "QA 검증 시트",
       strength: "medium",
-      title: "Evaluation sample set",
+      title: "평가 샘플 세트",
       type: "doc",
     },
   ],
@@ -145,46 +145,46 @@ const seedState: DemoState = {
       company: "Acme",
       dueDate: "2026-04-02",
       id: "review-acme",
-      owner: "Mina Park",
+      owner: "박민아",
       packetId: "packet-acme",
       questions: [
         {
           answer:
-            "Every customer-facing draft requires a human approver before it can be sent.",
+            "고객에게 나가는 모든 AI 초안은 발송 전에 반드시 사람이 승인합니다.",
           citations: ["evidence-oversight"],
           id: "q-acme-1",
           prompt:
-            "Describe human oversight for AI-generated customer communications.",
+            "AI가 생성한 고객 커뮤니케이션에 대해 어떤 사람 검토 체계가 있는지 설명해주세요.",
           status: "cited",
           systemId: "sys-support-copilot",
         },
         {
           answer:
-            "We retain immutable event logs for each model-assisted action, including actor, system, and timestamp.",
+            "모델이 관여한 각 작업에 대해 수행자, 시스템, 시각을 포함한 변경 불가능한 이벤트 로그를 보관합니다.",
           citations: ["evidence-logging"],
           id: "q-acme-2",
-          prompt: "How do you retain audit trails for AI actions?",
+          prompt: "AI 관련 작업의 감사 추적은 어떻게 보관하나요?",
           status: "cited",
           systemId: "sys-support-copilot",
         },
         {
           answer:
-            "High-risk routing decisions fall back to manual review when confidence drops below the escalation threshold.",
+            "고위험 라우팅 결정은 신뢰도가 에스컬레이션 임계값 아래로 떨어지면 수동 검토로 전환됩니다.",
           citations: ["evidence-boundaries"],
           id: "q-acme-3",
-          prompt: "What safeguards prevent automated policy routing errors?",
+          prompt: "자동 정책 라우팅 오류를 막기 위한 안전장치는 무엇인가요?",
           status: "cited",
           systemId: "sys-policy-router",
         },
       ],
       status: "ready",
-      title: "Acme Procurement Review",
+      title: "Acme 구매 심사",
     },
     {
       company: "Helix Bank",
       dueDate: "2026-04-06",
       id: "review-helix",
-      owner: "Jules Carter",
+      owner: "줄스 카터",
       packetId: null,
       questions: [
         {
@@ -192,22 +192,22 @@ const seedState: DemoState = {
           citations: [],
           id: "q-helix-1",
           prompt:
-            "Provide evidence that AI outputs cannot send regulated replies without approval.",
+            "승인 없이 AI 출력이 규제 대상 답변을 발송할 수 없다는 근거를 제시해주세요.",
           status: "blocked",
           systemId: "sys-support-copilot",
         },
       ],
       status: "blocked",
-      title: "Helix Bank Trust Review",
+      title: "Helix Bank 신뢰 심사",
     },
   ],
   tasks: [
     {
       id: "task-helix-owner",
-      owner: "Mina Park",
+      owner: "박민아",
       questionId: "q-helix-1",
       state: "open",
-      title: "Owner needed for approval evidence",
+      title: "승인 관련 증빙 담당자 지정 필요",
     },
   ],
   packets: [
@@ -217,30 +217,30 @@ const seedState: DemoState = {
       questions: [
         {
           answer:
-            "Every customer-facing draft requires a human approver before it can be sent.",
+            "고객에게 나가는 모든 AI 초안은 발송 전에 반드시 사람이 승인합니다.",
           citations: ["evidence-oversight"],
           id: "q-acme-1",
           prompt:
-            "Describe human oversight for AI-generated customer communications.",
+            "AI가 생성한 고객 커뮤니케이션에 대해 어떤 사람 검토 체계가 있는지 설명해주세요.",
         },
         {
           answer:
-            "We retain immutable event logs for each model-assisted action, including actor, system, and timestamp.",
+            "모델이 관여한 각 작업에 대해 수행자, 시스템, 시각을 포함한 변경 불가능한 이벤트 로그를 보관합니다.",
           citations: ["evidence-logging"],
           id: "q-acme-2",
-          prompt: "How do you retain audit trails for AI actions?",
+          prompt: "AI 관련 작업의 감사 추적은 어떻게 보관하나요?",
         },
         {
           answer:
-            "High-risk routing decisions fall back to manual review when confidence drops below the escalation threshold.",
+            "고위험 라우팅 결정은 신뢰도가 에스컬레이션 임계값 아래로 떨어지면 수동 검토로 전환됩니다.",
           citations: ["evidence-boundaries"],
           id: "q-acme-3",
-          prompt: "What safeguards prevent automated policy routing errors?",
+          prompt: "자동 정책 라우팅 오류를 막기 위한 안전장치는 무엇인가요?",
         },
       ],
-      proofSummary: "3 cited answers, 0 blocked questions, owner assigned.",
+      proofSummary: "근거 첨부 답변 3건, 차단된 질문 0건, 담당자 지정 완료.",
       publishedForReviewId: "review-acme",
-      reviewTitle: "Acme Procurement Review",
+      reviewTitle: "Acme 구매 심사",
       status: "published",
     },
   ],
@@ -277,7 +277,7 @@ function buildPacketQuestions(review: Pick<Questionnaire, "questions">) {
 
 function buildProofSummary(review: Pick<Questionnaire, "questions">) {
   const metrics = getQuestionnaireMetrics(review);
-  return `${metrics.cited} cited answers, ${metrics.blocked} blocked questions, owner assigned.`;
+  return `근거 첨부 답변 ${metrics.cited}건, 차단된 질문 ${metrics.blocked}건, 담당자 지정 완료.`;
 }
 
 function syncQuestionnaireStatus(review: Questionnaire) {
