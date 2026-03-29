@@ -29,13 +29,15 @@ description: "Tacigent Stage 6: Marketing. build-aligned launch system을 수립
 - `artifacts/problem.md` — 선택된 problem
 - `artifacts/solution.md` — 선택된 solution
 - `artifacts/design.md` — design direction
-- `artifacts/build-report.md` — build 결과
+- `artifacts/build.md` — build 결과
 - `workspace/app/` — 실제 구현된 제품 (참조)
 - `RunSpec.inputs.marketing` — 사용자의 marketing 직접 입력 (있으면)
 
+> **이어가기**: 이 stage의 artifact가 이미 일부 존재하면, 존재하는 artifact의 step은 건너뛰고 다음 step부터 이어간다.
+
 ## 실행 흐름
 
-### Step 1: Method Framing (Marketing-Specific)
+### Step 1: Method Framing + Meta-Research (Marketing-Specific)
 
 `tacigent-method-first` 프로토콜을 따르되, **marketing-specific method fields** 포함:
 
@@ -81,8 +83,8 @@ description: "Tacigent Stage 6: Marketing. build-aligned launch system을 수립
 사용자 입력이 없으면 기본 exploration swarm으로 넓게 탐색한 뒤, synthesis에서 2-3개의 launch cell cluster로 압축하고 critique → compare → choose.
 
 **Swarm Default (Marketing-Specific):**
-- 기본 exploration swarm: **5**
-- ICP가 매우 좁고 proof landscape가 명확하면 **3으로 downshift**
+- 기본 exploration swarm: **7**
+- ICP가 매우 좁고 proof landscape가 명확하면 **5로 downshift** (5 미만 금지)
 
 atomic planning unit = **launch cell**:
 
@@ -110,8 +112,7 @@ atomic planning unit = **launch cell**:
 4. **Activation Critic** — activation event가 명확하고 측정 가능한가?
 5. **Counterevidence Critic** — "이 channel/message가 효과 없을 근거는?"
 
-**second critique round는 기본 mandatory다.**
-third critique는 compliance-sensitive claim, major pricing/packaging change, primary claim contradiction이 남을 때만 escalation.
+**5회 critique 모두 mandatory다.** downshift 금지.
 
 ### Step 6: Channel Matrix & Experiments
 
@@ -126,6 +127,12 @@ third critique는 compliance-sensitive claim, major pricing/packaging change, pr
 ### Step 7: Late-Bound Build Alignment
 
 <MANDATORY>
+**build readiness가 `not_ready`인 경우:**
+- build의 unresolved issues와 verification 실패 내역을 확인한다
+- 검증되지 않은 기능에 의존하는 claim은 `needs_validation`으로 downgrade한다
+- launch cell의 proofAsset이 실제 build에서 동작하지 않으면 해당 cell을 제거하거나 대체한다
+- marketing 전체를 `needs_validation`으로 표시하고 validation debt를 기록한다
+
 final marketing canonicalization 전에 반드시 아래를 **다시 읽는다**:
 
 - build readiness 상태
@@ -170,6 +177,18 @@ viable launch cell이 1개만 남으면 single-candidate path 허용, why-no-com
 - material market refresh
 - claim contradiction
 
+## Output Review Cycles (5회 필수)
+
+`ralph-loop`의 OUTPUT-REVIEW-CYCLES 프로토콜을 따른다.
+
+marketing.md + launch-cells.json 작성 후, 5회의 제1원칙 리뷰를 수행한다. **Marketing-specific 리뷰 기준:**
+
+1. **launch cell 수를 더 줄일 수 있는가?** — 효과가 비슷한 cell을 합치거나 우선순위가 낮은 cell 삭제
+2. **claim이 build evidence와 정합하는가?** — build.md와 대조하여 모순 제거
+3. **channel이 target user에게 실제로 도달하는가?** — "있으면 좋겠다" 채널 삭제
+4. **activation event가 측정 가능한가?** — 모호한 metric → 구체적 수치로 교체
+5. **마케팅 카피에 AI 냄새가 나지 않는가?** — buzzword, 과장 표현, 반복 패턴 삭제
+
 ## Stop Condition
 
 아래가 **비어 있으면** canonicalization하지 않는다:
@@ -177,6 +196,7 @@ viable launch cell이 1개만 남으면 single-candidate path 허용, why-no-com
 - activation event
 - success metric
 - launch cells
+- **5회 산출물 리뷰 (review-1~5.md)**
 
 ## Readiness
 

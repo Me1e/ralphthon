@@ -30,15 +30,17 @@ description: "Tacigent Stage 7: Pitch. decision-support artifact를 생성한다
 - `artifacts/problem.md` — 선택된 problem
 - `artifacts/solution.md` — 선택된 solution
 - `artifacts/design.md` — design direction
-- `artifacts/build-report.md` — build 결과
+- `artifacts/build.md` — build 결과
 - `artifacts/marketing.md` — marketing 전략
 - `artifacts/launch-cells.json` — launch cells
 - `workspace/app/` — 실제 구현된 제품 (참조)
 - `RunSpec.inputs.pitch` — 사용자의 pitch 직접 입력 (있으면)
 
+> **이어가기**: 이 stage의 artifact가 이미 일부 존재하면, 존재하는 artifact의 step은 건너뛰고 다음 step부터 이어간다.
+
 ## 실행 흐름
 
-### Step 1: Method Framing (Pitch-Specific)
+### Step 1: Method Framing + Meta-Research (Pitch-Specific)
 
 `tacigent-method-first` 프로토콜을 따르되, **pitch-specific method fields** 포함:
 
@@ -107,8 +109,8 @@ summary → details → ask 순서가 아니라, **recommendation-first**.
 
 `tacigent-swarm-critique` 프로토콜을 따르되, pitch-specific defaults:
 
-- 기본 exploration swarm: **5**
-- audience, ask, recommendation spine이 이미 강하게 고정되면 **3으로 downshift**
+- 기본 exploration swarm: **7**
+- audience, ask, recommendation spine이 이미 강하게 고정되면 **5로 downshift** (5 미만 금지)
 
 ### Step 7: Critique (Pitch-Specific Critics)
 
@@ -120,8 +122,7 @@ summary → details → ask 순서가 아니라, **recommendation-first**.
 4. **Anchor-Drift Critic** — 사용자의 pitch 입력에서 벗어나지 않았는가
 5. **Counterevidence Critic** — "이 제품을 진행하지 말아야 할 이유는?"
 
-**second critique round는 기본 mandatory다.**
-third critique는 board/investor/executive ask가 irreversible하거나, objection 대비가 약하거나, contradiction-heavy artifact가 남을 때만 escalation.
+**5회 critique 모두 mandatory다.** downshift 금지.
 
 ### Step 8: Claim & Evidence Mapping
 
@@ -188,6 +189,12 @@ third critique는 board/investor/executive ask가 irreversible하거나, objecti
 ### Step 12: Live Market Refresh & Contradiction Pass
 
 <MANDATORY>
+**build readiness가 `not_ready`인 경우:**
+- build의 unresolved issues를 Risks / Alternatives 섹션에 명시한다
+- 검증되지 않은 기능에 대한 claim은 `inferred` 또는 `speculative`로 표시한다
+- recommendation에 build validation debt를 포함하고, ask에 검증 필요 항목을 명시한다
+- pitch 전체를 `needs_validation`으로 표시한다
+
 final canonicalization 직전에:
 
 1. **Live Market Refresh** — why-now와 market signal을 **live refresh**
@@ -217,12 +224,25 @@ final canonicalization 직전에:
 **Secondary: Pitch Deck (HTML)**
 - `index.html` 단일 파일 (self-contained)
 - 핵심 차트, flow diagram, 스크린샷 포함
-- responsive, modern, clean
+- desktop-optimized, modern, clean
+
+## Output Review Cycles (5회 필수)
+
+`ralph-loop`의 OUTPUT-REVIEW-CYCLES 프로토콜을 따른다.
+
+pre-read.md + index.html 작성 후, 5회의 제1원칙 리뷰를 수행한다. **Pitch-specific 리뷰 기준:**
+
+1. **첫 문단이 recommendation + ask를 즉시 전달하는가?** — 서론/배경 설명으로 시작하면 삭제
+2. **slide 수를 더 줄일 수 있는가?** — 같은 메시지를 전달하면서 slide를 합칠 수 있는지
+3. **모든 claim이 source에 매핑되어 있는가?** — 매핑 없는 claim 삭제 또는 inferred로 표시
+4. **anti-template check 재적용** — 회사 이름만 바꿔도 재사용 가능한 부분 제거
+5. **likely objection 3개에 대한 방어가 충분한가?** — 방어가 약하면 보강
 
 ## Stop Condition
 
 - ask contract, recommendation, major claim mapping 중 **하나라도 비면** canonicalization 불가
 - unresolved contradiction이 남으면 canonicalization 불가
+- **5회 산출물 리뷰가 완료되지 않으면 (review-1~5.md)** canonicalization 불가
 
 ## Readiness
 
@@ -266,7 +286,7 @@ pitch 산출물 작성이 완료되면, 전체 run의 **Clean Exit Summary**를 
 - ✅ Problem: artifacts/problem.md
 - ✅ Solution: artifacts/solution.md
 - ✅ Design: artifacts/design.md + design-contract.json
-- ✅ Build: workspace/app/ + build-report.md
+- ✅ Build: workspace/app/ + build.md
 - ✅ Marketing: artifacts/marketing.md + launch-cells.json
 - ✅ Pitch: artifacts/pitch/pre-read.md + pitch/index.html
 
