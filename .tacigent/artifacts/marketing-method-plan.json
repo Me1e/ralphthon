@@ -1,0 +1,21 @@
+{
+  "stage": "marketing",
+  "mode": "tight",
+  "selectedLaunchMethod": "proof-first launch",
+  "researchEmphasis": [
+    "AI buyer diligence timing triggers",
+    "questionnaire automation incumbents",
+    "founder-led outbound signals",
+    "consultant partner channel"
+  ],
+  "comparisonMode": "score launch cells by proof strength, activation clarity, channel fit, and expansion room",
+  "synthesisRule": "choose one primary launch cell and one supporting partner cell; delete broad channel plans that outrun current proof",
+  "stopCondition": "canonicalize when launch cells, activation event, success metrics, and build-aligned claims are explicit",
+  "buildReadiness": "ready",
+  "judgeLenses": [
+    "VC marketability and expansion room",
+    "B2B SaaS platform depth",
+    "engineering honesty",
+    "demo-first developer credibility"
+  ]
+}

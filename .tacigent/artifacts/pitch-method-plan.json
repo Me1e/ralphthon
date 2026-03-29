@@ -1,0 +1,10 @@
+{
+  "stage": "pitch",
+  "mode": "tight",
+  "selectedPitchMethod": "evidence-led recommendation",
+  "artifactMode": "hybrid",
+  "audienceHandling": "single recommendation spine with VC and tech-lead objections handled in separate modules",
+  "evidenceMappingMethod": "map each major claim to stage artifacts or live refreshed external sources with explicit status labels",
+  "synthesisRule": "keep one recommendation, one ask contract, and one bounded validation plan",
+  "stopCondition": "canonicalize when recommendation, ask, refreshed why-now, and major claim mapping are explicit and contradiction-free"
+}

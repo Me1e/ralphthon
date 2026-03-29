@@ -1,0 +1,10 @@
+{
+  "blocking": false,
+  "services": [],
+  "notes": [
+    "v1 build uses local credential auth only",
+    "v1 build uses local SQLite only",
+    "no external API is required for core flow"
+  ],
+  "decision": "Proceed in fully local mode"
+}

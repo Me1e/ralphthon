@@ -1,0 +1,84 @@
+{
+  "taskFrame": "Proofline design contract를 runnable Next.js app으로 구현하고, typecheck/lint/build/smoke baseline으로 검증한다.",
+  "successCriteria": [
+    "workspace/app 에 runnable Next.js 16 app이 생성된다",
+    "solution fullFeatureSet의 핵심 flow가 최소 3개 이상의 route에서 동작한다",
+    "seeded demo path로 login -> review queue -> review room -> packet publish flow가 재현된다",
+    "required verification baseline(typecheck, lint, build, smoke)이 통과한다"
+  ],
+  "constraints": [
+    "review room이 primary surface여야 한다",
+    "no external API dependency",
+    "local credential auth baseline만 사용한다",
+    "desktop-first only",
+    "component sprawl을 줄이고 shadcn primitives를 재사용한다"
+  ],
+  "candidateMethods": [
+    "TDD-first",
+    "scaffold-then-fill",
+    "core-logic-first"
+  ],
+  "selectedMethod": "TDD-first within scaffold-then-fill을 선택한다. 먼저 smoke path를 고정하는 failing Playwright test를 작성해 앱의 required flow를 명시하고, 이후 scaffold를 만들고 seeded data 기반 minimal implementation으로 test를 녹인다. UI polish는 verification baseline 이후에만 올린다.",
+  "branchPlan": "7개 순차 role-play branch를 사용한다. Branch 1 scaffold architecture, Branch 2 route/file plan, Branch 3 data model plan, Branch 4 auth/session plan, Branch 5 UI composition plan, Branch 6 testing/verification plan, Branch 7 risk-first simplification selector.",
+  "synthesisRule": "branch 결과를 하나의 implementation strategy로 합치되, review room 중심 route structure와 local seeded data path를 우선 보존한다.",
+  "stopCondition": "required verification baseline이 통과하고 build review 5회가 끝나면 종료한다.",
+  "explorationBranchCount": 7,
+  "synthesisMode": "single-synthesizer",
+  "critiqueRoundsMin": 5,
+  "criticRoles": [
+    "First-Principles Pruner",
+    "Root-Cause Critic",
+    "Verification Critic",
+    "Execution Critic",
+    "Counterevidence Critic"
+  ],
+  "pruningPolicy": "runtime complexity, external services, unnecessary abstractions, non-essential routes는 우선 삭제한다.",
+  "lightweight": false,
+  "implementationStrategy": "TDD-first scaffold-then-fill",
+  "componentPlan": {
+    "appShell": "single authenticated shell with left nav rail",
+    "routeGroups": [
+      "public auth route",
+      "authenticated app routes",
+      "buyer packet route"
+    ],
+    "uiFamilies": [
+      "dense rows",
+      "status chips",
+      "editor drawers",
+      "coverage header",
+      "packet sections"
+    ],
+    "dataModules": [
+      "seeded domain data",
+      "mapping helpers",
+      "UI actions/state transitions"
+    ]
+  },
+  "verificationOrder": [
+    "toolchain bootstrap",
+    "failing smoke test",
+    "targeted unit/type checks",
+    "lint",
+    "build",
+    "production smoke"
+  ],
+  "riskAreas": [
+    "missing local auth or DB could overcomplicate v1",
+    "review room UI may sprawl if component boundaries are unclear",
+    "Playwright setup can fail if dev/prod boot scripts are inconsistent",
+    "typed mapping logic can balloon if not constrained to seeded schemas"
+  ],
+  "metaResearch": {
+    "toolchain": {
+      "nodeVersion": "25.8.2 installed locally; satisfies Next.js 16 requirement of Node 20.9+",
+      "packageManager": "pnpm 10.33.0 installed locally"
+    },
+    "implementationBiases": [
+      "prefer server components for static seeded data shells",
+      "use client components only for interactive editing surfaces",
+      "use next/font for typography",
+      "keep data local and deterministic"
+    ]
+  }
+}

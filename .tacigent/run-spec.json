@@ -1,0 +1,37 @@
+{
+  "runId": "20260329T031348Z",
+  "productName": "HotPainWeb",
+  "executionMode": "tight",
+  "inputs": {
+    "intake": "제품 아이디어는 아직 없다. 에이전트가 지금 인터넷에서 가장 뜨거운 문제를 찾아 웹 제품으로 풀어야 한다. 모든 stage에서 VC, B2B SaaS/플랫폼, 엔지니어링 리더, 개발자 심사 관점을 반영한다.",
+    "problem": null,
+    "solution": null,
+    "design": null,
+    "stack": "Next.js 16.x App Router, React 19, Tailwind CSS 4, shadcn/ui, Better Auth 1.x, Drizzle ORM, better-sqlite3, pnpm, Playwright",
+    "marketing": "VC와 Tech Lead가 공감할 GTM 논리를 만든다.",
+    "pitch": "pre-read는 VC용, deck은 Tech Lead용. recommendation-first."
+  },
+  "normalization": {
+    "executionScope": "greenfield web product only",
+    "ideaSelectionOwner": "problem stage live research",
+    "evaluationLenses": {
+      "judges": [
+        "Bass Ventures 이태양 대표",
+        "Sendbird Korea 이상희 대표",
+        "한기용",
+        "ZEP 이재규 Tech Lead"
+      ],
+      "criteria": [
+        "실용성",
+        "창의성",
+        "완성도",
+        "임팩트"
+      ]
+    },
+    "demoConstraint": "5분 데모에서 핵심 flow가 end-to-end로 보여야 한다",
+    "buildConstraint": "solution fullFeatureSet, minimum 3 routes",
+    "authBaseline": "local credential auth",
+    "dbBaseline": "SQLite locally, PG-upgradable schema"
+  },
+  "createdAt": "2026-03-29T03:13:48Z"
+}

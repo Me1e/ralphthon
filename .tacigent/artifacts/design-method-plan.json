@@ -1,0 +1,105 @@
+{
+  "taskFrame": "Proofline의 solution fullFeatureSet을 build-ready flow, IA, state, visual system으로 수렴시키되 generic SaaS dashboard로 무너지지 않게 design contract를 만든다.",
+  "successCriteria": [
+    "최소 3개 이상 route의 screen job, primary action, first-noticed element가 정의된다",
+    "review room이 primary surface로 드러나는 flow-first IA가 확정된다",
+    "design-contract.json이 build가 추측 없이 구현할 수 있을 정도로 구체적이다",
+    "visual direction이 shadcn default fingerprint를 벗어나면서도 접근성과 구현 가능성을 유지한다"
+  ],
+  "constraints": [
+    "desktop-first only",
+    "solution fullFeatureSet 전체를 반영해야 한다",
+    "review room must remain the primary surface",
+    "generic card-soup dashboard 금지",
+    "Tailwind 4 + shadcn/ui + Next.js 16로 구현 가능해야 한다",
+    "WCAG-aware contrast, focus, keyboard path를 포함해야 한다"
+  ],
+  "candidateMethods": [
+    "flow-first compression",
+    "system-first reuse",
+    "risk-first branching"
+  ],
+  "selectedMethod": "flow-first compression을 선택한다. 문제와 solution 모두 active buyer review라는 한 흐름에 묶여 있으므로, 먼저 review room과 그 전후 단계의 정보 구조를 압축하고 그 후 visual language를 덧씌우는 방식이 가장 안전하다. system-first reuse는 shadcn fingerprint 위험이 크고, risk-first branching은 현재 stage에서 과도하게 보수적이다.",
+  "branchPlan": "7개 순차 role-play branch를 사용한다. Branch 1 IA compression, Branch 2 task-flow graph, Branch 3 review-room screen spec, Branch 4 systems/evidence management surfaces, Branch 5 buyer packet surface, Branch 6 visual language and anti-generic checks, Branch 7 accessibility/buildability selector.",
+  "synthesisRule": "branch별로 생성한 IA, flow, screen, style anchor를 결합하되 review room을 중심축으로 재배치하고, non-essential panels는 삭제한다.",
+  "stopCondition": "design.md와 design-contract.json이 route/state/accessibility/build constraints를 모두 채우고 readyForDev=true를 방어할 수 있으면 종료한다.",
+  "explorationBranchCount": 7,
+  "synthesisMode": "single-synthesizer",
+  "critiqueRoundsMin": 5,
+  "criticRoles": [
+    "First-Principles Pruner",
+    "Task-Clarity Critic",
+    "Buildability Critic",
+    "Accessibility Critic",
+    "Distinctiveness Critic"
+  ],
+  "pruningPolicy": "duplicate cards, decorative metrics, non-essential nav groups, static mock-only surfaces를 우선 삭제한다.",
+  "lightweight": false,
+  "selectedDesignMethod": "flow-first compression",
+  "researchEmphasis": "adjacent trust/GRC patterns, anti-generic SaaS failure modes, desktop workflow density, accessibility-safe distinctiveness",
+  "metaResearch": {
+    "researchPacket": {
+      "adjacentPatterns": [
+        "trust center",
+        "questionnaire automation",
+        "AI governance suite",
+        "editorial control-room layouts"
+      ],
+      "copyLanguageSignals": [
+        "buyer review",
+        "citation-backed",
+        "gap",
+        "packet",
+        "evidence",
+        "owner"
+      ],
+      "designSystemSnapshot": [
+        "shadcn/ui base components",
+        "Tailwind 4 token-based theming",
+        "next/font self-hosted typography"
+      ],
+      "antiGenericFindings": [
+        "review-room products fail when the home screen becomes a KPI card soup",
+        "generic blue SaaS palettes erase trust/legal context",
+        "library default radius/shadow make the product look like a starter kit",
+        "packet generation screens often look like export dialogs instead of buyer-facing proof surfaces"
+      ]
+    },
+    "directionSelection": {
+      "accepted": "editorial industrial control-room",
+      "rejected": [
+        "flat generic SaaS dashboard",
+        "glassmorphism AI workspace",
+        "enterprise admin greybox"
+      ],
+      "whyAccepted": "editorial typography adds trust/document gravity, industrial grid adds operator precision, and the combination visually matches a review workflow rather than a generic analytics tool."
+    }
+  },
+  "researchCoverage": {
+    "required": true,
+    "sourceClasses": [
+      "community_social",
+      "first_party"
+    ],
+    "platforms": [
+      "vendor product pages",
+      "design-system references",
+      "skill-provided design guidance"
+    ],
+    "geoCoverage": "global B2B SaaS desktop workflows",
+    "languageCoverage": [
+      "English"
+    ],
+    "queryFamilies": [
+      "generic_ui_signature",
+      "card_overload",
+      "brandless_ui",
+      "template_topology",
+      "density_breakpoint",
+      "interaction_realism"
+    ],
+    "missingCoverage": "",
+    "stopReason": "",
+    "freshnessWindow": "current design system and adjacent product patterns only"
+  }
+}

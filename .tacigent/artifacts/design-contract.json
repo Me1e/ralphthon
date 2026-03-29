@@ -1,0 +1,447 @@
+{
+  "informationArchitecture": {
+    "primaryNav": [
+      "Review Queue",
+      "Systems",
+      "Evidence"
+    ],
+    "secondaryNav": [],
+    "taskGroups": [
+      {
+        "name": "Review execution",
+        "screens": [
+          "/questionnaires",
+          "/questionnaires/[id]"
+        ]
+      },
+      {
+        "name": "Source upkeep",
+        "screens": [
+          "/systems",
+          "/evidence"
+        ]
+      },
+      {
+        "name": "Packet delivery",
+        "screens": [
+          "/packets/[id]"
+        ]
+      }
+    ],
+    "labelingRules": [
+      "Use 'Review' in visible UI copy before 'Questionnaire' unless the user is editing source data.",
+      "Use status labels Cited, Needs Review, Blocked, Published consistently.",
+      "Use Missing proof and Owner needed for blocked states.",
+      "Avoid generic compliance jargon when a workflow term exists."
+    ],
+    "validationMethod": "10-second job test, primary-action test, logo-swap test, and keyboard path review on every primary screen."
+  },
+  "taskFlowGraph": {
+    "happyPath": [
+      "login",
+      "open_review_queue",
+      "select_review",
+      "inspect_question_status",
+      "link_or_create_system",
+      "link_or_create_evidence",
+      "save_cited_answer",
+      "resolve_or_assign_gap",
+      "publish_packet",
+      "open_packet_view"
+    ],
+    "failurePath": [
+      "open_review_room",
+      "encounter_blocked_question",
+      "follow_create_system_or_add_evidence_cta",
+      "return_to_review_room",
+      "question_state_changes_to_needs_review_or_cited",
+      "publish_packet"
+    ],
+    "guardrails": [
+      "No answer without citation can be marked complete.",
+      "Blocked questions must expose a direct remediation CTA.",
+      "Review Queue is the default post-login route."
+    ]
+  },
+  "screenSpecs": [
+    {
+      "route": "/login",
+      "label": "Login",
+      "job": "Let the user enter the workspace quickly.",
+      "primaryAction": "Sign In",
+      "firstNoticedElement": "Proofline title and concise product promise",
+      "layoutGrammar": "Centered split intro with left promise block and right auth card",
+      "modules": [
+        "brand title",
+        "product promise",
+        "email field",
+        "password field",
+        "sign-in button",
+        "demo workspace hint"
+      ],
+      "states": [
+        "default",
+        "submitting",
+        "error"
+      ]
+    },
+    {
+      "route": "/questionnaires",
+      "label": "Review Queue",
+      "job": "Let the operator choose the next buyer review to process.",
+      "primaryAction": "Open Review Room",
+      "firstNoticedElement": "Status-weighted review rows with Cited, Needs Review, and Blocked counts",
+      "layoutGrammar": "Nav rail plus dense central review list with inline row actions",
+      "modules": [
+        "queue header",
+        "filter tabs",
+        "review rows",
+        "status badges",
+        "inline CTA"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "loaded"
+      ]
+    },
+    {
+      "route": "/questionnaires/[id]",
+      "label": "Review Room",
+      "job": "Resolve one buyer review until it can be published.",
+      "primaryAction": "Save Answer",
+      "terminalAction": "Publish Packet",
+      "firstNoticedElement": "Coverage header showing cited, needs review, and blocked counts",
+      "layoutGrammar": "Three-column desk with question rail, document canvas, and evidence ledger",
+      "modules": [
+        "coverage header",
+        "question index",
+        "answer editor",
+        "citation chip group",
+        "linked system summary",
+        "evidence ledger",
+        "gap task composer",
+        "publish action rail"
+      ],
+      "states": [
+        "loading",
+        "blocked",
+        "editing",
+        "saved",
+        "publish_ready",
+        "publish_error"
+      ]
+    },
+    {
+      "route": "/systems",
+      "label": "Systems",
+      "job": "Maintain the minimal AI system records needed for review answers.",
+      "primaryAction": "New System",
+      "firstNoticedElement": "System roster with owner and linked evidence count",
+      "layoutGrammar": "Dense roster with detail drawer/editor",
+      "modules": [
+        "system list",
+        "owner/status metadata",
+        "new system button",
+        "edit drawer",
+        "linked evidence preview"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "editing"
+      ]
+    },
+    {
+      "route": "/evidence",
+      "label": "Evidence",
+      "job": "Add, edit, and link reusable proof items.",
+      "primaryAction": "Add Evidence",
+      "firstNoticedElement": "Evidence rows grouped by linked system and evidence strength",
+      "layoutGrammar": "Dense evidence list with metadata side panel",
+      "modules": [
+        "evidence list",
+        "type badges",
+        "linked system tags",
+        "metadata panel",
+        "edit form"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "editing"
+      ]
+    },
+    {
+      "route": "/packets/[id]",
+      "label": "Buyer Packet",
+      "job": "Present a buyer-facing proof packet with readable cited answers and publication context.",
+      "primaryAction": "Copy Share Link",
+      "secondaryAction": "Back to Review",
+      "firstNoticedElement": "Packet header with review name, status, and generated timestamp",
+      "layoutGrammar": "Editorial document with anchored table of contents and cited sections",
+      "modules": [
+        "packet header",
+        "proof summary strip",
+        "table of contents",
+        "question answer sections",
+        "citation lists",
+        "share action"
+      ],
+      "states": [
+        "loading",
+        "published",
+        "stale",
+        "error"
+      ]
+    }
+  ],
+  "componentBindings": [
+    {
+      "name": "AppShell",
+      "base": [
+        "Sidebar",
+        "Separator",
+        "Button"
+      ],
+      "purpose": "Primary app chrome and navigation"
+    },
+    {
+      "name": "DenseDataRow",
+      "base": [
+        "Button",
+        "Badge",
+        "DropdownMenu"
+      ],
+      "purpose": "Review, system, and evidence rows"
+    },
+    {
+      "name": "StatusChip",
+      "base": [
+        "Badge"
+      ],
+      "purpose": "Consistent state language with icon + text"
+    },
+    {
+      "name": "DrawerEditor",
+      "base": [
+        "Sheet",
+        "Input",
+        "Textarea",
+        "Select"
+      ],
+      "purpose": "Inline create/edit flows for systems and evidence"
+    },
+    {
+      "name": "CoverageHeader",
+      "base": [
+        "Card",
+        "Badge",
+        "Button"
+      ],
+      "purpose": "Custom wrapper for review room summary"
+    },
+    {
+      "name": "CitationChipGroup",
+      "base": [
+        "Badge",
+        "Tooltip"
+      ],
+      "purpose": "Custom wrapper for evidence traceability"
+    },
+    {
+      "name": "PacketSection",
+      "base": [
+        "Card",
+        "Separator"
+      ],
+      "purpose": "Buyer packet section framing"
+    }
+  ],
+  "tokenBindings": {
+    "colors": {
+      "background": "#f4efe6",
+      "panel": "#fbf8f2",
+      "text": "#181513",
+      "mutedText": "#675f56",
+      "border": "#d8cec0",
+      "success": "#0d6b63",
+      "warning": "#b7791f",
+      "blocked": "#8c3b2d",
+      "focus": "#0f766e"
+    },
+    "typography": {
+      "display": "Newsreader",
+      "body": "IBM Plex Sans",
+      "mono": "IBM Plex Mono"
+    },
+    "radius": {
+      "panel": "14px",
+      "chip": "999px",
+      "input": "10px"
+    },
+    "borderWidth": {
+      "default": "1px",
+      "strong": "1.5px"
+    },
+    "shadow": {
+      "panel": "none",
+      "focus": "0 0 0 3px rgba(15,118,110,0.22)"
+    },
+    "spacing": {
+      "sectionGap": "24px",
+      "panelGap": "16px",
+      "rowHeight": "64px"
+    }
+  },
+  "stateSpecs": [
+    {
+      "screen": "/questionnaires",
+      "states": {
+        "loading": "Skeleton rows match final row density",
+        "empty": "Headline plus Seed Demo Review action",
+        "error": "Inline error block with retry action",
+        "loaded": "Rows show status counts and due date"
+      }
+    },
+    {
+      "screen": "/questionnaires/[id]",
+      "states": {
+        "loading": "Question rail, editor, and evidence ledger skeletons",
+        "blocked": "Missing proof or Owner needed message with direct remediation CTA",
+        "editing": "Save Answer available, publish disabled when uncited answers remain",
+        "publish_ready": "All required questions cited or acknowledged; publish enabled",
+        "publish_error": "Publish banner explains why packet could not be issued"
+      }
+    },
+    {
+      "screen": "/systems",
+      "states": {
+        "empty": "No systems yet plus New System CTA",
+        "editing": "Drawer editor with validation",
+        "error": "Inline error and retry"
+      }
+    },
+    {
+      "screen": "/evidence",
+      "states": {
+        "empty": "No evidence yet plus Add Evidence CTA",
+        "editing": "Metadata panel or drawer open",
+        "error": "Inline error and retry"
+      }
+    },
+    {
+      "screen": "/packets/[id]",
+      "states": {
+        "published": "Readable packet with proof summary and cited sections",
+        "stale": "Packet marked outdated if review changed after publication",
+        "error": "Packet unavailable block with back-to-review action"
+      }
+    }
+  ],
+  "visualDirection": {
+    "themeName": "Editorial Industrial Control-Room",
+    "intent": "Make the app feel like a buyer review desk rather than a generic analytics dashboard.",
+    "layoutGrammar": [
+      "single dominant work surface per screen",
+      "dense rows over decorative card grids",
+      "review room center canvas reads like a document under review",
+      "packet page reads like an editorial proof packet"
+    ]
+  },
+  "styleAnchors": [
+    "ruled dividers",
+    "mono metadata",
+    "editorial headings",
+    "visible borders",
+    "status chips with icon plus text",
+    "subtle paper undertone only"
+  ],
+  "styleConstraints": [
+    "No purple gradients.",
+    "No KPI hero card dashboard.",
+    "No glassmorphism.",
+    "No texture heavy enough to hurt readability.",
+    "Do not ship default library radius/shadow without token changes."
+  ],
+  "accessibilityContract": {
+    "contrast": "Light theme must maintain high text contrast and accessible status contrast.",
+    "focus": "All interactive elements use visible focus-visible ring with focus token.",
+    "statusSemantics": "Status uses icon plus text; color-only communication is forbidden.",
+    "keyboardNav": "Primary nav, question rail, row actions, and drawer triggers must be keyboard reachable.",
+    "packetSemantics": "Packet uses semantic headings, lists, and section landmarks.",
+    "reducedMotion": "Respect prefers-reduced-motion by removing non-essential transitions."
+  },
+  "contentRules": [
+    "Prefer operator language over abstract compliance jargon.",
+    "Use concise trust language: Evidence, Owner, Packet, Cited, Blocked.",
+    "Blocked and error states must use product-specific copy, not generic alert text.",
+    "Avoid hype language in product UI."
+  ],
+  "motionRules": [
+    "Use 140-220ms transitions for hover, focus, drawer, and panel state shifts.",
+    "Use opacity and transform only.",
+    "Publish success can highlight state but should avoid celebratory motion.",
+    "Loading states should prefer skeletons over spinners."
+  ],
+  "interactionStates": [
+    "hover",
+    "focus-visible",
+    "pressed",
+    "disabled"
+  ],
+  "buildConstraints": {
+    "componentReuseBudget": "Reuse shadcn primitives for most surfaces; allow 2-3 custom wrappers only.",
+    "motionBudget": "Minimal; no animation libraries required for v1.",
+    "localizationAssumptions": "English-only v1 copy is acceptable.",
+    "allowedNewComponentScope": "CoverageHeader, CitationChipGroup, PacketSection wrappers only.",
+    "driftSentinels": [
+      "If the first authenticated screen becomes a metric dashboard, reject the build.",
+      "If the review room center panel does not look like a working document, reject the build.",
+      "If packet view looks like an export modal instead of buyer-facing proof, reject the build."
+    ]
+  },
+  "fullFeatureSetCoverage": [
+    {
+      "feature": "local auth",
+      "routes": [
+        "/login"
+      ]
+    },
+    {
+      "feature": "systems CRUD",
+      "routes": [
+        "/systems"
+      ]
+    },
+    {
+      "feature": "evidence CRUD",
+      "routes": [
+        "/evidence"
+      ]
+    },
+    {
+      "feature": "questionnaire review workflow",
+      "routes": [
+        "/questionnaires",
+        "/questionnaires/[id]"
+      ]
+    },
+    {
+      "feature": "gap task handling",
+      "routes": [
+        "/questionnaires/[id]"
+      ]
+    },
+    {
+      "feature": "buyer-facing packet",
+      "routes": [
+        "/packets/[id]"
+      ]
+    }
+  ],
+  "readyForDev": true
+}

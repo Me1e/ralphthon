@@ -1,0 +1,24 @@
+[
+  {
+    "cellId": "lc-enterprise-ai-saas-first-review",
+    "segment": "Series A/B AI SaaS teams selling to enterprise buyers without dedicated GRC staff",
+    "trigger": "A live procurement, security, or legal review asks AI-specific questions during an active deal",
+    "promisedOutcome": "Publish a cited buyer packet from the first AI review without standing up a full trust program",
+    "proofAsset": "Passing production smoke flow, review-room screenshots, and buyer-packet artifact",
+    "channel": "Founder-led outbound plus warm operator and investor intros",
+    "successEvent": "A prospect agrees to run one live or recent buyer review through Proofline and reaches a published packet",
+    "phase": 1,
+    "priority": "high"
+  },
+  {
+    "cellId": "lc-fractional-grc-partner",
+    "segment": "Fractional security and GRC consultants serving AI startups",
+    "trigger": "The consultant is repeatedly pulled into ad hoc AI trust reviews for startup clients",
+    "promisedOutcome": "Use one repeatable review-room workflow to standardize proof gathering and packet output across clients",
+    "proofAsset": "Demo walkthrough, packet artifact, and explicit gap-task workflow",
+    "channel": "Direct consultant outreach and partner referrals",
+    "successEvent": "A consultant brings one startup client into a live review teardown",
+    "phase": 1,
+    "priority": "medium"
+  }
+]

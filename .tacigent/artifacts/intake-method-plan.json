@@ -1,0 +1,58 @@
+{
+  "taskFrame": "사용자 요청을 Tacigent tight-mode 실행 계약으로 정리하되, concrete product idea 선택은 잠그지 않고 problem stage의 live research로 넘긴다.",
+  "successCriteria": [
+    "run-level objective, constraints, evaluation lenses가 구조화되어 downstream stage가 prose를 다시 해석하지 않아도 된다",
+    "아이디어 부재를 명시적으로 preserved/deferred 처리하고 problem stage의 canonical owner를 고정한다",
+    "low-cost scan으로 현재 hot candidate space를 거칠게 매핑하되 premature locking을 피한다"
+  ],
+  "constraints": [
+    "executionMode는 tight로 고정한다",
+    "greenfield web product만 허용한다",
+    "문제 선택은 intake에서 확정하지 않는다",
+    "모든 stage에서 VC, B2B SaaS/플랫폼, 엔지니어링 리더, 개발자 심사 관점을 반영한다",
+    "최종 build는 최소 3개 route와 end-to-end 핵심 flow를 가져야 한다"
+  ],
+  "candidateMethods": [
+    "preserve-plus-defer framing",
+    "assume-a-problem-now and optimize downstream for buildability",
+    "ask user for narrower theme"
+  ],
+  "selectedMethod": "preserve-plus-defer framing을 선택한다. 사용자는 problem stage에서 인터넷 리서치로 직접 문제를 찾으라고 명시했고, intake에서 문제를 잠그면 upstream intent를 훼손한다. 질문 path는 금지 조건과 충돌하고, 즉시 문제를 가정하는 path는 anchor drift risk가 높다.",
+  "branchPlan": "why-no-swarm: intake는 lightweight single-path framing으로 충분하다. 현재 ambiguity는 intentional이며 downstream problem research가 canonical owner다.",
+  "synthesisRule": "raw input을 preserved/normalized/assumed/deferred/rejected로 분리하고, 이를 intentFrame과 downstreamContract로 canonicalize한다.",
+  "stopCondition": "intentFrame, ambiguity register, assumption/defer ledger, downstream contract, low-cost scan summary가 모두 채워지면 intake를 종료한다.",
+  "explorationBranchCount": 1,
+  "synthesisMode": "lightweight",
+  "critiqueRoundsMin": 0,
+  "criticRoles": [],
+  "pruningPolicy": "문제 아이디어 고정, 과도한 기술 선택, 과장된 market claim은 모두 삭제한다.",
+  "lightweight": true,
+  "intakeSpecific": {
+    "taskFrame": "preserve + normalize + defer",
+    "ambiguityStrategy": "assume on execution constraints, defer on concrete problem/solution selection",
+    "whyLightweightIsSafe": "사용자 입력이 실행 모드와 평가 기준을 충분히 제공했고, 지금 결정하면 안 되는 핵심 모호성은 의도적으로 problem stage로 넘겨야 한다."
+  },
+  "lowCostScan": {
+    "objective": "problem stage가 바로 파고들 hot candidate cluster를 2-3개 확보한다",
+    "signalsSeen": [
+      {
+        "cluster": "AI compliance and buyer readiness",
+        "whyNow": "EU AI Act high-risk timeline, buyer questionnaires, AI governance launches가 동시에 보인다"
+      },
+      {
+        "cluster": "tariff-driven ecommerce margin shock",
+        "whyNow": "2026 tariff uncertainty와 importer/seller complaint가 계속 관측된다"
+      },
+      {
+        "cluster": "AI agent reliability and auditability",
+        "whyNow": "production observability, audit trail, governance pain이 2026 enterprise tooling의 hot topic으로 확산 중이다"
+      }
+    ]
+  },
+  "readiness": {
+    "status": "ready",
+    "outstandingChecks": [
+      "problem stage에서 live research로 hot cluster를 canonical wedge로 좁혀야 한다"
+    ]
+  }
+}

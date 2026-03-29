@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Proofline Pitch</title>
+    <style>
+      :root {
+        --bone: #f4efe4;
+        --paper: #fbf7ee;
+        --ink: #181614;
+        --muted: #625a4d;
+        --line: rgba(24, 22, 20, 0.14);
+        --teal: #1d5b57;
+        --amber: #b8771d;
+        --rust: #9a4d2f;
+        --success: #245b2b;
+        --shadow: 0 20px 60px rgba(24, 22, 20, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(29, 91, 87, 0.08), transparent 28%),
+          linear-gradient(180deg, #efe6d4 0%, var(--bone) 36%, #efe8dc 100%);
+      }
+
+      .deck {
+        width: min(1180px, calc(100vw - 40px));
+        margin: 0 auto;
+        padding: 36px 0 64px;
+      }
+
+      .slide {
+        position: relative;
+        min-height: 760px;
+        margin: 0 0 28px;
+        padding: 34px 38px 38px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.32));
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            180deg,
+            transparent 0,
+            transparent 31px,
+            rgba(24, 22, 20, 0.04) 32px
+          );
+        pointer-events: none;
+      }
+
+      .kicker,
+      .footnote,
+      .metric-label,
+      .eyebrow {
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .kicker {
+        position: relative;
+        z-index: 1;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        position: relative;
+        z-index: 1;
+        margin: 12px 0 0;
+        font-family: "Newsreader", Georgia, "Times New Roman", serif;
+        line-height: 0.94;
+        letter-spacing: -0.03em;
+      }
+
+      h1 {
+        font-size: clamp(54px, 7vw, 82px);
+        max-width: 920px;
+      }
+
+      h2 {
+        font-size: clamp(38px, 4vw, 56px);
+        max-width: 900px;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        position: relative;
+        z-index: 1;
+        font-size: 18px;
+        line-height: 1.62;
+      }
+
+      .lede {
+        max-width: 860px;
+        margin-top: 22px;
+        font-size: 22px;
+        color: var(--ink);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .grid-2,
+      .grid-3 {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card,
+      .stat,
+      .panel {
+        border: 1px solid var(--line);
+        background: rgba(251, 247, 238, 0.84);
+        padding: 18px;
+      }
+
+      .stat strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 44px;
+        line-height: 1;
+        font-family: "Newsreader", Georgia, serif;
+      }
+
+      .bar-chart {
+        display: grid;
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 220px 1fr 90px;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .bar-track {
+        height: 14px;
+        border: 1px solid var(--line);
+        background: rgba(24, 22, 20, 0.06);
+      }
+
+      .bar-fill {
+        height: 100%;
+      }
+
+      .teal {
+        background: var(--teal);
+      }
+
+      .amber {
+        background: var(--amber);
+      }
+
+      .rust {
+        background: var(--rust);
+      }
+
+      .green {
+        background: var(--success);
+      }
+
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .flow-step {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.72);
+        padding: 16px;
+      }
+
+      .flow-step .eyebrow {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .flow-step h3 {
+        margin-top: 10px;
+        font-size: 24px;
+      }
+
+      .shots {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .shot {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.58);
+        padding: 10px;
+      }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .shot figcaption {
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .table {
+        width: 100%;
+        margin-top: 18px;
+        border-collapse: collapse;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px 10px;
+        border-top: 1px solid var(--line);
+        vertical-align: top;
+        text-align: left;
+      }
+
+      .callout {
+        margin-top: 22px;
+        padding: 18px 20px;
+        border-left: 4px solid var(--teal);
+        background: rgba(29, 91, 87, 0.08);
+      }
+
+      .footnote {
+        position: relative;
+        z-index: 1;
+        margin-top: 22px;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .bullet-list {
+        margin: 20px 0 0;
+        padding-left: 20px;
+      }
+
+      .bullet-list li + li {
+        margin-top: 10px;
+      }
+
+      .ask-box {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .pill {
+        display: inline-block;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.8);
+      }
+
+      @media (max-width: 960px) {
+        .grid-2,
+        .grid-3,
+        .shots,
+        .ask-box,
+        .flow {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 1fr;
+        }
+
+        .slide {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="deck">
+      <section class="slide">
+        <div class="kicker">Proofline / Recommendation</div>
+        <h1>Back Proofline as a six-week validation bet on AI buyer-review ops.</h1>
+        <p class="lede">
+          The recommendation is to continue, but at validation scale. The wedge
+          is sharp, the timing is real, and the product already proves the
+          review-to-packet path in code.
+        </p>
+        <div class="grid-3" style="margin-top: 28px;">
+          <div class="stat">
+            <div class="metric-label">Ask</div>
+            <strong>6 weeks</strong>
+            <p class="muted">Validation sprint, not a broad go-to-market launch.</p>
+          </div>
+          <div class="stat">
+            <div class="metric-label">Proof</div>
+            <strong>1 pass</strong>
+            <p class="muted">Production smoke covers login, queue, review room, publish, and packet.</p>
+          </div>
+          <div class="stat">
+            <div class="metric-label">Target</div>
+            <strong>2 partners</strong>
+            <p class="muted">Two design partners are enough to confirm or kill the wedge.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Decision:</strong> keep Proofline as the product direction, but
+          keep every next claim bounded by live design-partner evidence.
+        </div>
+        <div class="footnote">
+          Source classes: build artifacts + live refreshed official and vendor sources.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Problem</div>
+        <h2>The pain is not “compliance” in the abstract. It is a live enterprise deal waiting on uncited AI answers.</h2>
+        <div class="grid-2" style="margin-top: 26px;">
+          <div class="panel">
+            <p>
+              The narrow customer is a small AI SaaS team selling into
+              mid-market or enterprise accounts without a dedicated GRC owner.
+              The moment of pain arrives when procurement, security, or legal
+              asks AI-specific questions in an active deal.
+            </p>
+            <ul class="bullet-list">
+              <li>Slack threads replace a real response process.</li>
+              <li>Answers are assembled from memory and stale docs.</li>
+              <li>Missing proof is discovered late, after the buyer is already waiting.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="eyebrow">Why this matters</div>
+            <h3>Revenue is upstream.</h3>
+            <p>
+              This wedge sits in the deal cycle. If the answer packet stalls,
+              the seller loses speed, trust, or both.
+            </p>
+            <div class="bar-chart">
+              <div class="bar-row">
+                <div>Revenue urgency</div>
+                <div class="bar-track"><div class="bar-fill teal" style="width: 88%;"></div></div>
+                <div>High</div>
+              </div>
+              <div class="bar-row">
+                <div>Current process quality</div>
+                <div class="bar-track"><div class="bar-fill rust" style="width: 28%;"></div></div>
+                <div>Low</div>
+              </div>
+              <div class="bar-row">
+                <div>Tool fit today</div>
+                <div class="bar-track"><div class="bar-fill amber" style="width: 44%;"></div></div>
+                <div>Partial</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Why Now</div>
+        <h2>August 2, 2026 makes AI diligence a near-term buying ritual, not a distant policy topic.</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="eyebrow">1</div>
+            <h3>Regulatory clock</h3>
+            <p>European Commission guidance still points to August 2, 2026 for most AI Act rules.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">2</div>
+            <h3>Buyer behavior</h3>
+            <p>Enterprise buyers ask earlier when the compliance date is real but implementation is still messy.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">3</div>
+            <h3>Category motion</h3>
+            <p>Vanta, Drata, and Conveyor are all selling adjacent AI questionnaire workflows right now.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">4</div>
+            <h3>Opening</h3>
+            <p>The first-response wedge is still small enough to own before it is buried in larger trust stacks.</p>
+          </div>
+        </div>
+        <div class="footnote">
+          Sources: European Commission AI Act pages; Council of the EU release on March 13, 2026; Vanta, Drata, Conveyor product pages.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Build Proof</div>
+        <h2>What we built already works from login to buyer packet.</h2>
+        <p class="lede">
+          This is not a stitched mock. The app passes production smoke and the
+          screenshots below were taken from the verified build.
+        </p>
+        <div class="shots">
+          <figure class="shot">
+            <img src="./assets/queue.png" alt="Proofline review queue" />
+            <figcaption>Review queue with ready and blocked review paths.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/review-room.png" alt="Proofline review room" />
+            <figcaption>Review room with question context, evidence, and gap tasks.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="./assets/packet.png" alt="Proofline buyer packet" />
+            <figcaption>Buyer-facing packet published from the review room.</figcaption>
+          </figure>
+          <div class="panel">
+            <div class="eyebrow">Verification</div>
+            <h3>All green.</h3>
+            <ul class="bullet-list">
+              <li><code>pnpm run typecheck</code> passed</li>
+              <li><code>pnpm run lint</code> passed</li>
+              <li><code>pnpm run smoke</code> passed</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Product Thesis</div>
+        <h2>Proofline is different because uncited answers cannot quietly ship.</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="eyebrow">Input</div>
+            <h3>Buyer question</h3>
+            <p>One live AI diligence question enters the desk.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">Mapping</div>
+            <h3>System + proof</h3>
+            <p>The team links the question to a system and to evidence, not memory.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">Constraint</div>
+            <h3>Gap or citation</h3>
+            <p>Missing proof becomes a gap task instead of a soft guess.</p>
+          </div>
+          <div class="flow-step">
+            <div class="eyebrow">Output</div>
+            <h3>Buyer packet</h3>
+            <p>The answer is published as a cited packet that the buyer can review.</p>
+          </div>
+        </div>
+        <div class="callout">
+          The one-line differentiation: <strong>buyer-review-native workspace,
+          not generic questionnaire automation.</strong>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">ICP</div>
+        <h2>The first customer is a 20-200 person AI SaaS team, not the Fortune 500 GRC department.</h2>
+        <div class="grid-2" style="margin-top: 26px;">
+          <div class="card">
+            <div class="eyebrow">Primary cell</div>
+            <h3>AI SaaS selling into enterprise</h3>
+            <ul class="bullet-list">
+              <li>No dedicated GRC owner</li>
+              <li>First serious AI buyer review lands mid-deal</li>
+              <li>Needs speed, not a full trust transformation</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Supporting cell</div>
+            <h3>Fractional security / GRC consultants</h3>
+            <ul class="bullet-list">
+              <li>Repeated questionnaire fire drills across startup clients</li>
+              <li>Need one repeatable response workflow</li>
+              <li>Can become an efficient partner channel</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Market Map</div>
+        <h2>Incumbents validate the category, but they optimize broader trust stacks.</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Vendor</th>
+              <th>What they optimize</th>
+              <th>Where Proofline enters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vanta</td>
+              <td>Broader trust + questionnaire automation</td>
+              <td>Before the program is mature enough for a full trust stack</td>
+            </tr>
+            <tr>
+              <td>Drata / SafeBase</td>
+              <td>Compliance and AI questionnaire assistance</td>
+              <td>In the first live AI buyer review when response discipline is still ad hoc</td>
+            </tr>
+            <tr>
+              <td>Conveyor</td>
+              <td>AI questionnaire automation at scale</td>
+              <td>Around proof-state management and the review-room narrative</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          Proofline does not need to beat these systems everywhere. It needs to
+          win one early, painful step well enough to earn the right to expand.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Go-To-Market</div>
+        <h2>Go to market with one live review, one packet, and one design partner at a time.</h2>
+        <div class="grid-3" style="margin-top: 24px;">
+          <div class="card">
+            <div class="eyebrow">Channel</div>
+            <h3>Founder outbound</h3>
+            <p>Target AI SaaS teams already selling to enterprise buyers.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Offer</div>
+            <h3>Live teardown</h3>
+            <p>“Bring one recent buyer review. Leave with a packet or a gap list.”</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Partner</div>
+            <h3>Fractional GRC</h3>
+            <p>Use consultants as repeat-entry operators rather than broad channel spend.</p>
+          </div>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-row">
+            <div>50 targeted accounts</div>
+            <div class="bar-track"><div class="bar-fill teal" style="width: 100%;"></div></div>
+            <div>input</div>
+          </div>
+          <div class="bar-row">
+            <div>4 live demos</div>
+            <div class="bar-track"><div class="bar-fill amber" style="width: 40%;"></div></div>
+            <div>goal</div>
+          </div>
+          <div class="bar-row">
+            <div>2 design partners</div>
+            <div class="bar-track"><div class="bar-fill green" style="width: 20%;"></div></div>
+            <div>goal</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Risks</div>
+        <h2>The risks are real, named, and testable.</h2>
+        <div class="grid-3" style="margin-top: 22px;">
+          <div class="card">
+            <div class="eyebrow">Risk 1</div>
+            <h3>Incumbent bundling</h3>
+            <p>Larger vendors could move earlier in the workflow if customers demand it.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Risk 2</div>
+            <h3>Wrong entry point</h3>
+            <p>Prospects may care more about import and ingestion than review-room proof flow.</p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">Risk 3</div>
+            <h3>Proof gap</h3>
+            <p>The product proof is real, but live design-partner proof still does not exist.</p>
+          </div>
+        </div>
+        <div class="callout">
+          This is why the recommendation is a validation sprint, not a budget-heavy launch.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Ask</div>
+        <h2>Approve a six-week sprint to prove or kill the wedge quickly.</h2>
+        <div class="ask-box">
+          <div class="panel">
+            <div class="eyebrow">Sprint outputs</div>
+            <ul class="bullet-list">
+              <li>10 customer and operator conversations</li>
+              <li>3 live buyer-review teardowns</li>
+              <li>2 design partners</li>
+              <li>1 pilot with explicit budget ownership or consultant-sponsored usage</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="eyebrow">Build next</div>
+            <p><span class="pill">Questionnaire import</span></p>
+            <p><span class="pill">Persistent domain data</span></p>
+            <p><span class="pill">Collaboration notes</span></p>
+          </div>
+        </div>
+        <div class="callout">
+          Kill the direction if fewer than two teams will run a real review
+          through the product, or if they consistently prefer incumbent tooling
+          without needing a dedicated review room.
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="kicker">Appendix</div>
+        <h2>The major claims are mapped to sources, not hand-waving.</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Most AI Act rules apply on August 2, 2026</td>
+              <td>European Commission AI Act pages</td>
+              <td>Verified</td>
+            </tr>
+            <tr>
+              <td>There is live implementation uncertainty in March 2026</td>
+              <td>Council of the EU, March 13, 2026</td>
+              <td>Verified</td>
+            </tr>
+            <tr>
+              <td>The category is commercially active</td>
+              <td>Vanta, Drata, Conveyor product pages</td>
+              <td>Supported</td>
+            </tr>
+            <tr>
+              <td>Proofline has a working end-to-end flow</td>
+              <td>Build verification artifacts</td>
+              <td>Verified</td>
+            </tr>
+            <tr>
+              <td>The first-response wedge can become a business</td>
+              <td>Stage synthesis</td>
+              <td>Inferred</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
