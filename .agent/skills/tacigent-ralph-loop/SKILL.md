@@ -225,16 +225,19 @@ intake → problem → solution → design → build → marketing → pitch
 **한 stage의 산출물이 완성되기 전에 다음 stage 스킬을 미리 읽지 않는다.**
 **한 stage의 swarm/critique를 거치지 않고 산출물만 쓰면 그 stage는 완료가 아니다.**
 
-각 stage 산출물에는 반드시 아래 과정 증거가 포함되어야 한다:
-- `## Exploration Branches` — 탐색한 3개 branch의 관점과 결과 요약
-- `## Critique Round 1` — 5명 critic의 비평 내용
-- `## Revision 1` — critique 반영 수정 내용
-- `## Critique Round 2` — 재비평 내용
-- `## Revision 2` — 재수정 내용
-- `## Selection Justification` — 최종 선택 이유
+<ARTIFACT-SEPARATION>
+**에이전트가 탐색과 비평을 얕게 요약하고 넘어가는 것을 막기 위해, 각 단계를 반드시 별도의 독립된 파일로 깊게 작성해야 한다.**
 
-위 섹션이 없는 산출물은 **미완성**이며, 다음 stage로 넘어갈 수 없다.
-(intake는 lightweight이므로 exploration/critique 섹션 대신 `## Framing Rationale`만 필수)
+하나의 `<stage>.md` 파일에 모든 과정을 몰아 쓰면 안 된다. 다음 순서대로 **파일을 하나씩 작성하며** 깊게 사고해야 한다:
+
+1. `artifacts/<stage>-method-plan.json` 작성
+2. `artifacts/<stage>-exploration.md` 작성 (3개 branch 심층 탐색 + 합성 결과)
+3. `artifacts/<stage>-critique-1.md` 작성 (5명 critic의 상세 비평 + 1차 수정안)
+4. `artifacts/<stage>-critique-2.md` 작성 (5명 critic의 상세 재비평 + 2차 수정안)
+5. `artifacts/<stage>.md` 작성 (최종 결과)
+
+위 파일들(intake 등 lightweight 예외 제외)이 모두 명시적으로 독립 생성되지 않고, 바로 `<stage>.md` 하나에 과정이 압축되어 쓰여진다면 **미완성/배칭 실패**로 간주한다.
+</ARTIFACT-SEPARATION>
 </ANTI-BATCHING>
 
 ## 공통 프로토콜
@@ -297,25 +300,35 @@ v1은 greenfield web product만 다룬다.
     intake.md
     intake-method-plan.json
     interpretation-ledger.md
-    problem.md
-    problem-compare.md
     problem-method-plan.json
-    solution.md
-    solution-compare.md
+    problem-exploration.md
+    problem-critique-1.md
+    problem-critique-2.md
+    problem.md
     solution-method-plan.json
-    design.md
-    design-contract.json
+    solution-exploration.md
+    solution-critique-1.md
+    solution-critique-2.md
+    solution.md
     design-method-plan.json
+    design-exploration.md
+    design-critique-1.md
+    design-critique-2.md
+    design-contract.json
+    design.md
+    build-method-plan.json
     build-report.md
     verification-report.md
-    build-method-plan.json
-    marketing.md
-    launch-cells.json
     marketing-method-plan.json
+    marketing-exploration.md
+    marketing-critique-1.md
+    marketing-critique-2.md
+    launch-cells.json
+    marketing.md
+    pitch-method-plan.json
     pitch/
       index.html
       pre-read.md
-    pitch-method-plan.json
   workspace/
     app/
       ... (실제 web application 코드)
