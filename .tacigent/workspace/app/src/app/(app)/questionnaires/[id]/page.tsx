@@ -10,6 +10,7 @@ import { StatusChip } from "@/components/status-chip";
 import {
   getEvidence,
   getQuestionnaireById,
+  getQuestionnaireMetrics,
   getSystems,
   getTasksForQuestion,
 } from "@/lib/demo-store";
@@ -46,14 +47,11 @@ export default async function ReviewRoomPage({
       item.linkedSystemIds.includes(selectedQuestion.systemId),
   );
   const tasks = getTasksForQuestion(selectedQuestion.id);
-  const counts = {
-    blocked: review.questions.filter((item) => item.status === "blocked")
-      .length,
-    cited: review.questions.filter((item) => item.status === "cited").length,
-    needsReview: review.questions.filter(
-      (item) => item.status === "needs-review",
-    ).length,
-  };
+  const counts = getQuestionnaireMetrics(review);
+  const publishReady = counts.publishReady;
+  const selectedQuestionIndex = review.questions.findIndex(
+    (item) => item.id === selectedQuestion.id,
+  );
 
   return (
     <div className="flex flex-1 flex-col gap-6">
@@ -67,16 +65,43 @@ export default async function ReviewRoomPage({
             {review.title} for {review.company}. Resolve each question with
             citations before the packet ships.
           </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <StatusChip
+              label={publishReady ? "packet ready" : "proof still missing"}
+              status={publishReady ? "ready" : "blocked"}
+            />
+            <StatusChip
+              label={`question ${selectedQuestionIndex + 1} of ${review.questions.length}`}
+              status="needs-review"
+            />
+          </div>
         </div>
-        <form action={publishPacketAction}>
-          <input name="questionnaireId" type="hidden" value={review.id} />
-          <button
-            className="inline-flex h-11 items-center justify-center rounded-[10px] border border-foreground bg-foreground px-4 text-sm font-semibold text-background transition hover:opacity-90"
-            type="submit"
-          >
-            Publish Packet
-          </button>
-        </form>
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          {review.packetId ? (
+            <Link
+              className="inline-flex h-11 items-center justify-center rounded-[10px] border border-border px-4 text-sm font-semibold text-foreground transition hover:bg-foreground/5"
+              href={`/packets/${review.packetId}`}
+            >
+              View Current Packet
+            </Link>
+          ) : null}
+          <form action={publishPacketAction}>
+            <input name="questionnaireId" type="hidden" value={review.id} />
+            <button
+              className="inline-flex h-11 items-center justify-center rounded-[10px] border border-foreground bg-foreground px-4 text-sm font-semibold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:border-border disabled:bg-transparent disabled:text-muted disabled:hover:opacity-100"
+              disabled={!publishReady}
+              type="submit"
+            >
+              Publish Packet
+            </button>
+          </form>
+          {!publishReady ? (
+            <p className="max-w-xs text-right text-sm leading-6 text-muted">
+              Publishing stays locked until every question is cited and no proof
+              gap remains open.
+            </p>
+          ) : null}
+        </div>
       </div>
 
       <div className="paper-panel grid flex-1 grid-cols-[260px_minmax(0,1fr)_320px] gap-0 overflow-hidden">
@@ -152,23 +177,33 @@ export default async function ReviewRoomPage({
                 </span>
               ))}
             </div>
-            <div className="mt-auto flex items-center justify-between gap-3">
-              <button
-                className="inline-flex h-11 items-center justify-center rounded-[10px] border border-foreground px-4 text-sm font-semibold text-foreground transition hover:bg-foreground/5"
-                type="submit"
-              >
-                Save Answer
-              </button>
-              <StatusChip
-                label={
-                  selectedQuestion.citations.length > 0
-                    ? "citation required met"
-                    : "missing citation"
-                }
-                status={
-                  selectedQuestion.citations.length > 0 ? "cited" : "blocked"
-                }
-              />
+            <div className="mt-auto rounded-[12px] border border-border/80 bg-background/75 p-4">
+              <p className="status-ink text-xs text-muted">
+                Answer action rail
+              </p>
+              <p className="mt-2 text-sm leading-6 text-muted">
+                Save the answer after the wording is stable. Publish is safest
+                when every question is either cited or explicitly surfaced as a
+                gap.
+              </p>
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <button
+                  className="inline-flex h-11 items-center justify-center rounded-[10px] border border-foreground px-4 text-sm font-semibold text-foreground transition hover:bg-foreground/5"
+                  type="submit"
+                >
+                  Save Answer
+                </button>
+                <StatusChip
+                  label={
+                    selectedQuestion.citations.length > 0
+                      ? "citation required met"
+                      : "missing citation"
+                  }
+                  status={
+                    selectedQuestion.citations.length > 0 ? "cited" : "blocked"
+                  }
+                />
+              </div>
             </div>
           </form>
         </section>

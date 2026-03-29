@@ -49,11 +49,25 @@ export type Questionnaire = {
   title: string;
 };
 
+export type PacketQuestion = Pick<
+  ReviewQuestion,
+  "answer" | "citations" | "id" | "prompt"
+>;
+
+export type QuestionnaireMetrics = {
+  blocked: number;
+  cited: number;
+  needsReview: number;
+  publishReady: boolean;
+};
+
 export type BuyerPacket = {
   generatedAt: string;
   id: string;
+  questions: PacketQuestion[];
   proofSummary: string;
   publishedForReviewId: string;
+  reviewTitle: string;
   status: "published";
 };
 
@@ -200,8 +214,33 @@ const seedState: DemoState = {
     {
       generatedAt: "2026-03-29T12:00:00.000Z",
       id: "packet-acme",
+      questions: [
+        {
+          answer:
+            "Every customer-facing draft requires a human approver before it can be sent.",
+          citations: ["evidence-oversight"],
+          id: "q-acme-1",
+          prompt:
+            "Describe human oversight for AI-generated customer communications.",
+        },
+        {
+          answer:
+            "We retain immutable event logs for each model-assisted action, including actor, system, and timestamp.",
+          citations: ["evidence-logging"],
+          id: "q-acme-2",
+          prompt: "How do you retain audit trails for AI actions?",
+        },
+        {
+          answer:
+            "High-risk routing decisions fall back to manual review when confidence drops below the escalation threshold.",
+          citations: ["evidence-boundaries"],
+          id: "q-acme-3",
+          prompt: "What safeguards prevent automated policy routing errors?",
+        },
+      ],
       proofSummary: "3 cited answers, 0 blocked questions, owner assigned.",
       publishedForReviewId: "review-acme",
+      reviewTitle: "Acme Procurement Review",
       status: "published",
     },
   ],
@@ -211,6 +250,71 @@ const state = structuredClone(seedState) as DemoState;
 
 function makeId(prefix: string) {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function deriveQuestionStatus(
+  question: Pick<ReviewQuestion, "answer" | "citations">,
+) {
+  if (!question.answer.trim()) {
+    return "blocked" as const;
+  }
+
+  if (question.citations.length === 0) {
+    return "needs-review" as const;
+  }
+
+  return "cited" as const;
+}
+
+function buildPacketQuestions(review: Pick<Questionnaire, "questions">) {
+  return review.questions.map(({ answer, citations, id, prompt }) => ({
+    answer,
+    citations: [...citations],
+    id,
+    prompt,
+  }));
+}
+
+function buildProofSummary(review: Pick<Questionnaire, "questions">) {
+  const metrics = getQuestionnaireMetrics(review);
+  return `${metrics.cited} cited answers, ${metrics.blocked} blocked questions, owner assigned.`;
+}
+
+function syncQuestionnaireStatus(review: Questionnaire) {
+  const metrics = getQuestionnaireMetrics(review);
+
+  review.status = metrics.publishReady ? "ready" : "blocked";
+
+  return metrics;
+}
+
+function resolveGapTasks(questionId: string) {
+  for (const task of state.tasks) {
+    if (task.questionId === questionId && task.state === "open") {
+      task.state = "resolved";
+    }
+  }
+}
+
+export function getQuestionnaireMetrics(
+  review: Pick<Questionnaire, "questions">,
+): QuestionnaireMetrics {
+  const blocked = review.questions.filter(
+    (item) => item.status === "blocked",
+  ).length;
+  const cited = review.questions.filter(
+    (item) => item.status === "cited",
+  ).length;
+  const needsReview = review.questions.filter(
+    (item) => item.status === "needs-review",
+  ).length;
+
+  return {
+    blocked,
+    cited,
+    needsReview,
+    publishReady: blocked === 0 && needsReview === 0,
+  };
 }
 
 export function getSystems() {
@@ -332,14 +436,13 @@ export function saveAnswer(input: {
   }
 
   question.answer = input.answer;
+  question.status = deriveQuestionStatus(question);
 
-  if (question.citations.length > 0) {
-    question.status = "cited";
-    review.status = "ready";
-  } else {
-    question.status = "needs-review";
-    review.status = "blocked";
+  if (question.status === "cited") {
+    resolveGapTasks(question.id);
   }
+
+  syncQuestionnaireStatus(review);
 }
 
 export function createGapTask(input: {
@@ -358,7 +461,18 @@ export function createGapTask(input: {
   }
 
   question.status = "blocked";
-  review.status = "blocked";
+  syncQuestionnaireStatus(review);
+
+  const existingTask = state.tasks.find(
+    (item) => item.questionId === input.questionId && item.state === "open",
+  );
+
+  if (existingTask) {
+    existingTask.owner = input.owner;
+    existingTask.title = input.title;
+    return;
+  }
+
   state.tasks.unshift({
     id: makeId("task"),
     owner: input.owner,
@@ -375,8 +489,15 @@ export function publishPacket(questionnaireId: string) {
     return null;
   }
 
+  const metrics = syncQuestionnaireStatus(review);
+
+  if (!metrics.publishReady) {
+    return null;
+  }
+
   const packetId = review.packetId ?? makeId("packet");
-  const proofSummary = `${review.questions.filter((item) => item.citations.length > 0).length} cited answers, ${review.questions.filter((item) => item.status === "blocked").length} blocked questions, owner assigned.`;
+  const proofSummary = buildProofSummary(review);
+  const questions = buildPacketQuestions(review);
 
   review.packetId = packetId;
   review.status = "published";
@@ -385,15 +506,19 @@ export function publishPacket(questionnaireId: string) {
 
   if (existingPacket) {
     existingPacket.generatedAt = new Date().toISOString();
+    existingPacket.questions = questions;
     existingPacket.proofSummary = proofSummary;
+    existingPacket.reviewTitle = review.title;
     return existingPacket.id;
   }
 
   state.packets.unshift({
     generatedAt: new Date().toISOString(),
     id: packetId,
+    questions,
     proofSummary,
     publishedForReviewId: questionnaireId,
+    reviewTitle: review.title,
     status: "published",
   });
 

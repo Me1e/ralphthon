@@ -1,11 +1,8 @@
 import { notFound } from "next/navigation";
 
+import { PacketActions } from "@/components/packet-actions";
 import { StatusChip } from "@/components/status-chip";
-import {
-  getPacketById,
-  getQuestionnaireById,
-  getQuestionnaires,
-} from "@/lib/demo-store";
+import { getPacketById, getQuestionnaireById } from "@/lib/demo-store";
 import { formatDateLabel } from "@/lib/utils";
 
 export default async function PacketPage({
@@ -20,9 +17,7 @@ export default async function PacketPage({
     notFound();
   }
 
-  const review =
-    getQuestionnaireById(packet.publishedForReviewId) ??
-    getQuestionnaires().find((item) => item.packetId === packet.id);
+  const review = getQuestionnaireById(packet.publishedForReviewId);
 
   if (!review) {
     notFound();
@@ -38,45 +33,65 @@ export default async function PacketPage({
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <StatusChip status="published" />
           <p className="text-sm text-muted">
-            {review.title} · generated {formatDateLabel(packet.generatedAt)}
+            {packet.reviewTitle} · generated{" "}
+            {formatDateLabel(packet.generatedAt)}
           </p>
         </div>
+        <PacketActions reviewId={review.id} />
       </header>
 
       <section className="paper-panel p-8">
         <div className="ruled-divider pb-5">
           <p className="status-ink text-xs text-muted">Proof summary</p>
           <h2 className="mt-2 font-serif text-3xl text-foreground">
-            {review.title}
+            {packet.reviewTitle}
           </h2>
           <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
             {packet.proofSummary}
           </p>
         </div>
 
-        <div className="mt-8 space-y-8">
-          {review.questions.map((question, index) => (
-            <section key={question.id} className="space-y-3">
-              <p className="status-ink text-xs text-muted">
-                Question {index + 1}
-              </p>
-              <h3 className="font-semibold text-foreground">
-                {question.prompt}
-              </h3>
-              <p className="text-sm leading-7 text-foreground">
-                {question.answer || "No answer yet."}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {question.citations.map((citation) => (
-                  <StatusChip
-                    key={citation}
-                    label={`Citation ${citation.replace("evidence-", "")}`}
-                    status="cited"
-                  />
-                ))}
-              </div>
-            </section>
-          ))}
+        <div className="mt-8 grid gap-8 xl:grid-cols-[240px_minmax(0,1fr)]">
+          <aside className="rounded-[10px] border border-border bg-background/70 p-5">
+            <p className="status-ink text-xs text-muted">Table of contents</p>
+            <ol className="mt-4 space-y-3">
+              {packet.questions.map((question, index) => (
+                <li key={question.id}>
+                  <a
+                    className="text-sm leading-6 text-foreground transition hover:text-success"
+                    href={`#${question.id}`}
+                  >
+                    {index + 1}. {question.prompt}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </aside>
+
+          <div className="space-y-8">
+            {packet.questions.map((question, index) => (
+              <section id={question.id} key={question.id} className="space-y-3">
+                <p className="status-ink text-xs text-muted">
+                  Question {index + 1}
+                </p>
+                <h3 className="font-semibold text-foreground">
+                  {question.prompt}
+                </h3>
+                <p className="text-sm leading-7 text-foreground">
+                  {question.answer || "No answer yet."}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {question.citations.map((citation) => (
+                    <StatusChip
+                      key={citation}
+                      label={`Citation ${citation.replace("evidence-", "")}`}
+                      status="cited"
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
       </section>
     </main>

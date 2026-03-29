@@ -15,32 +15,42 @@ export default async function EvidencePage() {
           <p className="status-ink text-xs text-muted">Evidence ledger</p>
           <h2 className="mt-2 font-serif text-4xl text-foreground">Evidence</h2>
         </div>
-        <div className="divide-y divide-border">
-          {evidence.map((item) => (
-            <div
-              key={item.id}
-              className="grid grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] gap-4 px-6 py-5"
-            >
-              <div>
-                <p className="font-semibold text-foreground">{item.title}</p>
-                <p className="mt-2 text-sm text-muted">{item.source}</p>
+        {evidence.length === 0 ? (
+          <div className="px-6 py-10">
+            <p className="font-semibold text-foreground">No evidence yet.</p>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
+              Add the policy, spec, or doc that proves an answer. The review
+              room is stronger when evidence exists before the buyer asks.
+            </p>
+          </div>
+        ) : (
+          <div className="divide-y divide-border">
+            {evidence.map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_auto] gap-4 px-6 py-5"
+              >
+                <div>
+                  <p className="font-semibold text-foreground">{item.title}</p>
+                  <p className="mt-2 text-sm text-muted">{item.source}</p>
+                </div>
+                <div className="space-y-2 text-sm text-muted">
+                  <p>{item.type}</p>
+                  <p>{item.linkedSystemIds.length} linked systems</p>
+                </div>
+                <form action={archiveEvidenceAction}>
+                  <input name="id" type="hidden" value={item.id} />
+                  <button
+                    className="inline-flex h-10 items-center justify-center rounded-[10px] border border-border px-3 text-sm font-medium text-foreground transition hover:bg-foreground/5"
+                    type="submit"
+                  >
+                    Archive
+                  </button>
+                </form>
               </div>
-              <div className="space-y-2 text-sm text-muted">
-                <p>{item.type}</p>
-                <p>{item.linkedSystemIds.length} linked systems</p>
-              </div>
-              <form action={archiveEvidenceAction}>
-                <input name="id" type="hidden" value={item.id} />
-                <button
-                  className="inline-flex h-10 items-center justify-center rounded-[10px] border border-border px-3 text-sm font-medium text-foreground transition hover:bg-foreground/5"
-                  type="submit"
-                >
-                  Archive
-                </button>
-              </form>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <form
@@ -58,6 +68,8 @@ export default async function EvidencePage() {
           <input
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="title"
+            placeholder="Human oversight runbook"
+            required
           />
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
@@ -65,6 +77,8 @@ export default async function EvidencePage() {
           <input
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             name="source"
+            placeholder="Product requirement memo"
+            required
           />
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
@@ -94,6 +108,8 @@ export default async function EvidencePage() {
             className="rounded-[10px] border border-border bg-transparent px-3 py-3 text-sm text-foreground"
             defaultValue={systems.map((item) => item.id).join(", ")}
             name="linkedSystemIds"
+            placeholder="sys-support-copilot, sys-policy-router"
+            required
           />
         </label>
         <button

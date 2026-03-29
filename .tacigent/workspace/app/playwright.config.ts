@@ -11,7 +11,8 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: "pnpm build && pnpm start --port 3010",
+    command:
+      "env -u NO_COLOR -u FORCE_COLOR pnpm build && env -u NO_COLOR -u FORCE_COLOR pnpm start --port 3010",
     url: "http://127.0.0.1:3010",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,

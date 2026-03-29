@@ -16,9 +16,10 @@ test("proofline seeded workflow reaches a published buyer packet", async ({
   ).toBeVisible();
   await expect(page.getByText("Acme Procurement Review")).toBeVisible();
 
-  await page.getByRole("link", { name: "Open Review Room" }).first().click();
-
-  await expect(page).toHaveURL(/\/questionnaires\/.+/);
+  await Promise.all([
+    page.waitForURL(/\/questionnaires\/.+/),
+    page.getByRole("link", { name: "Open Ready Review" }).click(),
+  ]);
   await expect(
     page.getByRole("heading", { name: "Review Room" }),
   ).toBeVisible();
@@ -26,9 +27,10 @@ test("proofline seeded workflow reaches a published buyer packet", async ({
     page.getByRole("button", { name: "Publish Packet" }),
   ).toBeVisible();
 
-  await page.getByRole("button", { name: "Publish Packet" }).click();
-
-  await expect(page).toHaveURL(/\/packets\/.+/);
+  await Promise.all([
+    page.waitForURL(/\/packets\/.+/),
+    page.getByRole("button", { name: "Publish Packet" }).click(),
+  ]);
   await expect(
     page.getByRole("heading", { name: "Buyer Packet" }),
   ).toBeVisible();

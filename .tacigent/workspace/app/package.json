@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "biome check src tests playwright.config.ts next.config.ts postcss.config.mjs package.json biome.json tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "smoke": "playwright test tests/smoke/proofline.spec.ts"
+    "smoke": "playwright test tests/smoke/proofline.spec.ts",
+    "verify": "pnpm run typecheck && pnpm run lint && pnpm run build && pnpm run smoke"
   },
   "dependencies": {
     "better-auth": "^1.5.6",

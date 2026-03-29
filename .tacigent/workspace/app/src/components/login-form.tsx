@@ -62,6 +62,8 @@ export function LoginForm() {
           defaultValue="demo@proofline.app"
           id="email"
           name="email"
+          placeholder="demo@proofline.app"
+          required
           type="email"
         />
       </label>
@@ -76,12 +78,17 @@ export function LoginForm() {
           defaultValue="proofline-demo"
           id="password"
           name="password"
+          placeholder="proofline-demo"
+          required
           type="password"
         />
       </label>
 
       {errorMessage ? (
-        <p className="rounded-[10px] border border-blocked/35 bg-blocked/8 px-3 py-3 text-sm text-blocked">
+        <p
+          aria-live="polite"
+          className="rounded-[10px] border border-blocked/35 bg-blocked/8 px-3 py-3 text-sm text-blocked"
+        >
           {errorMessage}
         </p>
       ) : null}
