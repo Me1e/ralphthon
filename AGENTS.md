@@ -77,6 +77,8 @@
 
 ## 금지 사항
 
+- ❌ **여러 stage 산출물을 한꺼번에 만드는 것 (가장 흔한 실패)**
+- ❌ swarm/critique를 거치지 않고 산출물만 쓰는 것
 - ❌ stage를 건너뛰는 것
 - ❌ build 전에 verification 없이 "완료"라고 하는 것
 - ❌ evidence 없이 market claim을 만드는 것

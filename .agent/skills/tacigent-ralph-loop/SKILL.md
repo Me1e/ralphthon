@@ -209,6 +209,34 @@ intake → problem → solution → design → build → marketing → pitch
    → 완료 시 clean exit
 </MANDATORY-CHAIN>
 
+<ANTI-BATCHING>
+**절대로 여러 stage의 산출물을 한꺼번에 만들지 않는다.**
+
+이것이 가장 흔한 실패 패턴이다: 에이전트가 "효율"을 위해 intake, problem, solution, design 산출물을 한 번에 몰아서 파일로 쓰는 것. **이것은 금지다.**
+
+반드시 이 순서를 지켜야 한다:
+1. 현재 stage의 스킬을 읽는다
+2. 현재 stage의 method framing을 수행한다
+3. 현재 stage의 swarm exploration을 수행한다 (3 branch, 순차 role-play)
+4. 현재 stage의 critique round를 수행한다 (2회, 제1원칙 적용)
+5. 현재 stage의 산출물을 작성한다
+6. **그 다음에야** 다음 stage 스킬을 읽는다
+
+**한 stage의 산출물이 완성되기 전에 다음 stage 스킬을 미리 읽지 않는다.**
+**한 stage의 swarm/critique를 거치지 않고 산출물만 쓰면 그 stage는 완료가 아니다.**
+
+각 stage 산출물에는 반드시 아래 과정 증거가 포함되어야 한다:
+- `## Exploration Branches` — 탐색한 3개 branch의 관점과 결과 요약
+- `## Critique Round 1` — 5명 critic의 비평 내용
+- `## Revision 1` — critique 반영 수정 내용
+- `## Critique Round 2` — 재비평 내용
+- `## Revision 2` — 재수정 내용
+- `## Selection Justification` — 최종 선택 이유
+
+위 섹션이 없는 산출물은 **미완성**이며, 다음 stage로 넘어갈 수 없다.
+(intake는 lightweight이므로 exploration/critique 섹션 대신 `## Framing Rationale`만 필수)
+</ANTI-BATCHING>
+
 ## 공통 프로토콜
 
 각 stage 스킬은 아래 공통 프로토콜을 참조한다. **stage 스킬이 지시할 때** 해당 프로토콜 스킬을 읽는다:
@@ -248,6 +276,7 @@ v1은 greenfield web product만 다룬다.
 
 | 생각 | 현실 |
 |------|------|
+| "intake~design까지 한 번에 쓰면 효율적이겠다" | **가장 흔한 실패.** 각 stage는 독립적으로 swarm/critique를 거쳐야 한다. 배칭 금지. |
 | "이 stage는 건너뛰어도 되겠다" | 모든 stage는 필수. 건너뛰기 불가. |
 | "사용자에게 확인받아야겠다" | intake 전에만 질문 가능. 이후는 assume/defer. |
 | "여기서 일단 멈추겠다" | 멈추기 금지. pitch까지 계속 진행. |
