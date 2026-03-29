@@ -24,9 +24,9 @@
 - 유일한 정지 조건: `clean_exit` (pitch 완료) 또는 `hard_block` (external credential 부재)
 
 ### 4. 다양한 시각
-- non-trivial 탐색은 **홀수 branch** (tight 모드 기본 3개)에서 순차적 role-play로 탐색한다
+- non-trivial 탐색은 **5개 관점** (홀수 branch)에서 순차적 role-play로 탐색한다
 - 탐색 결과를 합성한 뒤 **역할별로 분화된 5명의 critic**이 비평한다
-- 비평은 기본 **2회** 반복한다 (critique → revision → critique → revision)
+- 비평은 기본 **3회** 반복한다 (critique → revision × 3)
 - identical critic 5개를 돌리는 방식은 금지한다
 
 ### 5. Evidence 기반
@@ -77,7 +77,8 @@
 
 ## 금지 사항
 
-- ❌ **여러 stage 산출물을 한꺼번에 만드는 것 (가장 흔한 실패)**
+- ❌ **여러 산출물 파일을 한 턴(turn)에 동시에 생성하는 것 (하나 쓰고 멈춘 뒤 다음 턴에 다음 파일 작성 필수)**
+- ❌ 여러 stage 산출물을 한꺼번에 만드는 것 (가장 흔한 실패)
 - ❌ swarm/critique를 거치지 않고 산출물만 쓰는 것
 - ❌ stage를 건너뛰는 것
 - ❌ build 전에 verification 없이 "완료"라고 하는 것

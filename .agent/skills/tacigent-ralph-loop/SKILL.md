@@ -119,19 +119,19 @@ digraph ralph_loop {
 
 `executionMode`는 전체 파이프라인의 볼륨을 결정한다.
 
-| Mode | Branch | Critique | Research | 목표 시간 | 용도 |
-|------|--------|----------|----------|----------|------|
-| `normal` | 5 | 2회 | full | ~7-8시간 | 풀 퀄리티 |
-| **`tight`** | **3** | **2회** | **focused** | **~5시간** | **기본값. 시연/발표용** |
-| `aggressive` | 3 | 1회 | minimal | ~3시간 | 빠른 검증용 |
-| `terminal` | 1 | 1회 | skip | ~1.5시간 | 최소 실행 |
+| Mode | Branch | Critique | Meta-Research | Research | 목표 시간 | 용도 |
+|------|--------|----------|---------------|----------|----------|------|
+| **`tight`** | **5** | **3회** | **필수** | **full** | **~5시간** | **기본값. 시연/발표용** |
+| `aggressive` | 3 | 2회 | 선택 | focused | ~3시간 | 빠른 검증용 |
+| `terminal` | 1 | 1회 | skip | skip | ~1.5시간 | 최소 실행 |
 
 **기본값은 `tight`다.** 사용자가 명시적으로 다른 mode를 지정하지 않으면 `tight`로 실행한다.
 
 `tight` mode 규칙:
-- swarm branch: **기본 3** (stage-specific downshift 조건이 없으면 3)
-- critique: **2회 유지** (품질 보호)
-- research: **focused** (핵심 query family만, full coverage 대신 decision-class 기반)
+- swarm branch: **5개 관점** (다양한 시각 확보)
+- critique: **3회** (제1원칙 비평 루프를 충분히 반복)
+- meta-research: **필수** (리서치 방법 자체를 먼저 리서치)
+- research: **full** (8개 query family 전부, 다양한 플랫폼 횡단)
 - build MVP: **core workflow 1개 + happy path** 중심
 
 ### 0.4 Time Budget
@@ -142,13 +142,13 @@ digraph ralph_loop {
 | Stage | 목표 | 상한 | 비고 |
 |-------|------|------|------|
 | intake | ~10분 | 15분 | lightweight, 빠르게 |
-| problem | ~25분 | 35분 | research + 3-branch + 2 critique |
-| solution | ~25분 | 35분 | 3-branch + 2 critique |
-| design | ~35분 | 45분 | research + 3-branch + 2 critique + contract |
+| problem | ~40분 | 50분 | meta-research + full research + 5-branch + 3 critique |
+| solution | ~35분 | 45분 | 5-branch + 3 critique |
+| design | ~40분 | 50분 | meta-research + 5-branch + 3 critique + contract |
 | build | ~120분 | 150분 | scaffold + implement + verify |
-| marketing | ~25분 | 35분 | research + 3-branch + 2 critique |
-| pitch | ~30분 | 40분 | research + 2 critique + HTML 생성 |
-| **합계** | **~270분** | **~355분 (≈6h)** | |
+| marketing | ~30분 | 40분 | research + 5-branch + 3 critique |
+| pitch | ~35분 | 45분 | research + 3 critique + HTML 생성 |
+| **합계** | **~310분** | **~395분 (≈6.5h)** | |
 
 **시간 초과 방지:**
 - 각 stage에서 **상한에 근접하면** scope를 줄이되 산출물 구조는 유지한다
@@ -157,8 +157,17 @@ digraph ralph_loop {
 
 **너무 빠른 완료 방지:**
 - 각 stage에서 method-plan artifact가 비어 있으면 진행하지 않는다
-- critique round를 생략하지 않는다 (tight에서도 2회 mandatory)
+- meta-research 단계를 생략하지 않는다
+- critique round를 생략하지 않는다 (tight에서도 3회 mandatory)
 - build에서 verification baseline을 생략하지 않는다
+
+**검색 밀도 기준 (research-required stage당):**
+- exploration: 5 branch × 3~5 검색 = **최소 15~25회 웹 검색**
+- critique 3 rounds: round당 5~8 검색 = **최소 15~25회 웹 검색**
+- revision 3 rounds: round당 2~3 반증 검색 = **최소 6~9회 웹 검색**
+- **stage당 합계: 최소 ~40~60회 웹 검색**
+
+텍스트만 생성하고 웹 검색 없이 끝낸 exploration/critique는 **얕은 작업**으로 간주한다.
 </MANDATORY>
 
 ### 0.5 Preflight Review
@@ -216,9 +225,9 @@ intake → problem → solution → design → build → marketing → pitch
 
 반드시 이 순서를 지켜야 한다:
 1. 현재 stage의 스킬을 읽는다
-2. 현재 stage의 method framing을 수행한다
-3. 현재 stage의 swarm exploration을 수행한다 (3 branch, 순차 role-play)
-4. 현재 stage의 critique round를 수행한다 (2회, 제1원칙 적용)
+2. 현재 stage의 method framing을 수행한다 (meta-research 포함)
+3. 현재 stage의 swarm exploration을 수행한다 (5 branch, 순차 role-play)
+4. 현재 stage의 critique round를 수행한다 (3회, 제1원칙 적용)
 5. 현재 stage의 산출물을 작성한다
 6. **그 다음에야** 다음 stage 스킬을 읽는다
 
@@ -226,18 +235,33 @@ intake → problem → solution → design → build → marketing → pitch
 **한 stage의 swarm/critique를 거치지 않고 산출물만 쓰면 그 stage는 완료가 아니다.**
 
 <ARTIFACT-SEPARATION>
-**에이전트가 탐색과 비평을 얕게 요약하고 넘어가는 것을 막기 위해, 각 단계를 반드시 별도의 독립된 파일로 깊게 작성해야 한다.**
+**탐색과 비평의 과정을 별도의 독립된 파일로 깊게 작성해야 한다.**
 
-하나의 `<stage>.md` 파일에 모든 과정을 몰아 쓰면 안 된다. 다음 순서대로 **파일을 하나씩 작성하며** 깊게 사고해야 한다:
+하나의 `<stage>.md` 파일에 모든 과정을 몰아 쓰면 안 된다. 다음 순서대로 파일을 작성한다:
 
-1. `artifacts/<stage>-method-plan.json` 작성
-2. `artifacts/<stage>-exploration.md` 작성 (3개 branch 심층 탐색 + 합성 결과)
-3. `artifacts/<stage>-critique-1.md` 작성 (5명 critic의 상세 비평 + 1차 수정안)
-4. `artifacts/<stage>-critique-2.md` 작성 (5명 critic의 상세 재비평 + 2차 수정안)
-5. `artifacts/<stage>.md` 작성 (최종 결과)
+1. `artifacts/<stage>-method-plan.json` 작성 — method framing + meta-research 결과
+2. `artifacts/<stage>-exploration.md` 작성 — 5개 branch 심층 탐색 + 합성 결과
+3. `artifacts/<stage>-critique-1.md` 작성 — 5명 critic의 상세 비평 + 1차 수정안
+4. `artifacts/<stage>-critique-2.md` 작성 — 5명 critic의 상세 재비평 + 2차 수정안
+5. `artifacts/<stage>-critique-3.md` 작성 — 5명 critic의 최종 비평 + 3차 수정안
+6. `artifacts/<stage>.md` 작성 — 최종 결과
 
-위 파일들(intake 등 lightweight 예외 제외)이 모두 명시적으로 독립 생성되지 않고, 바로 `<stage>.md` 하나에 과정이 압축되어 쓰여진다면 **미완성/배칭 실패**로 간주한다.
+위 파일들(intake 등 lightweight 예외 제외)이 모두 명시적으로 독립 생성되지 않으면 **미완성**으로 간주한다.
 </ARTIFACT-SEPARATION>
+
+<META-RESEARCH>
+**리서치가 필요한 stage (problem, design, marketing, pitch)에서는 본 리서치 전에 반드시 메타리서치를 수행한다.**
+
+메타리서치란: "이 주제를 가장 잘 리서치하려면 어디서 무엇을 찾아야 하는가"를 먼저 리서치하는 것이다.
+
+메타리서치 절차:
+1. 이 stage에서 답해야 할 핵심 질문들을 나열한다
+2. 각 질문에 가장 적합한 검색 플랫폼과 키워드 전략을 정한다
+3. 어떤 종류의 evidence가 있으면 결정을 내릴 수 있는지 미리 정의한다
+4. 이 메타리서치 결과를 `<stage>-method-plan.json`의 `metaResearch` 필드에 기록한다
+
+메타리서치 없이 바로 web search부터 시작하는 것은 금지한다.
+</META-RESEARCH>
 </ANTI-BATCHING>
 
 ## 공통 프로토콜
@@ -304,16 +328,19 @@ v1은 greenfield web product만 다룬다.
     problem-exploration.md
     problem-critique-1.md
     problem-critique-2.md
+    problem-critique-3.md
     problem.md
     solution-method-plan.json
     solution-exploration.md
     solution-critique-1.md
     solution-critique-2.md
+    solution-critique-3.md
     solution.md
     design-method-plan.json
     design-exploration.md
     design-critique-1.md
     design-critique-2.md
+    design-critique-3.md
     design-contract.json
     design.md
     build-method-plan.json
@@ -323,6 +350,7 @@ v1은 greenfield web product만 다룬다.
     marketing-exploration.md
     marketing-critique-1.md
     marketing-critique-2.md
+    marketing-critique-3.md
     launch-cells.json
     marketing.md
     pitch-method-plan.json
