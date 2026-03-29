@@ -122,16 +122,21 @@ third critique round는 아래 경우에**만** optional escalation으로 허용
 - low separation between winner and runner-up
 - contradiction-heavy output
 
-## Time Pressure Downshift (Compression Ladder)
+## Execution Mode → Compression Ladder
 
-time pressure가 커질수록:
+`RunSpec.executionMode`에 따라 기본 파라미터가 결정된다:
 
-| Pressure | Exploration | Critique Rounds | Research |
-|----------|------------|----------------|----------|
-| normal | 5 branches | 2 rounds | full |
-| tight | 3 branches | 2 rounds | focused |
-| aggressive | 3 branches | 1 round | minimal |
-| terminal | 1 branch (single-path) | 1 round | skip optional |
+| executionMode | Exploration | Critique Rounds | Research | 비고 |
+|--------------|------------|----------------|----------|------|
+| `normal` | 5 branches | 2 rounds | full | |
+| **`tight`** | **3 branches** | **2 rounds** | **focused** | **기본값** |
+| `aggressive` | 3 branches | 1 round | minimal | |
+| `terminal` | 1 branch (single-path) | 1 round | skip optional | |
+
+**기본값은 `tight`다.** stage 스킬이 "기본 exploration swarm: 5"라고 적혀 있어도, `executionMode=tight`이면 **3으로 읽는다**.
+
+stage-specific downshift 조건(viable candidate가 빠르게 수렴 등)은 `tight`의 3에서 **추가로 1까지 내릴 수 있다**.
+stage-specific upshift는 `tight`에서 허용하지 않는다. `normal`에서만 5를 사용한다.
 
 downshift가 일어나면 반드시 기록한다:
 - `why-no-swarm` 또는 `why-no-second-round`

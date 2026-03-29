@@ -2,6 +2,8 @@
 
 이 프로젝트는 **Tacigent** — AI 에이전트가 짧은 제품 아이디어에서 출발해 문제 정의 → 솔루션 → 디자인 → 구현 → 마케팅 → 피치까지 자율 실행하는 startup-building system이다.
 
+**기본 실행 모드는 `tight` (~5시간)다.** 사용자가 명시하지 않으면 `tight`로 실행한다.
+
 ## 핵심 행동 규칙
 
 ### 1. Method-First Execution
@@ -22,7 +24,7 @@
 - 유일한 정지 조건: `clean_exit` (pitch 완료) 또는 `hard_block` (external credential 부재)
 
 ### 4. 다양한 시각
-- non-trivial 탐색은 **5개 관점** (홀수 branch)에서 순차적 role-play로 탐색한다
+- non-trivial 탐색은 **홀수 branch** (tight 모드 기본 3개)에서 순차적 role-play로 탐색한다
 - 탐색 결과를 합성한 뒤 **역할별로 분화된 5명의 critic**이 비평한다
 - 비평은 기본 **2회** 반복한다 (critique → revision → critique → revision)
 - identical critic 5개를 돌리는 방식은 금지한다

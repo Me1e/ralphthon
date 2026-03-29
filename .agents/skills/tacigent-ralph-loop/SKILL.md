@@ -100,7 +100,7 @@ digraph ralph_loop {
 {
   "runId": "<timestamp-based-id>",
   "productName": "<사용자 요청에서 추출한 working title>",
-  "executionMode": "standard",
+  "executionMode": "tight",
   "inputs": {
     "intake": "<사용자의 핵심 요청>",
     "problem": null,
@@ -115,7 +115,53 @@ digraph ralph_loop {
 }
 ```
 
-### 0.3 Preflight Review
+### 0.3 Execution Mode
+
+`executionMode`는 전체 파이프라인의 볼륨을 결정한다.
+
+| Mode | Branch | Critique | Research | 목표 시간 | 용도 |
+|------|--------|----------|----------|----------|------|
+| `normal` | 5 | 2회 | full | ~7-8시간 | 풀 퀄리티 |
+| **`tight`** | **3** | **2회** | **focused** | **~5시간** | **기본값. 시연/발표용** |
+| `aggressive` | 3 | 1회 | minimal | ~3시간 | 빠른 검증용 |
+| `terminal` | 1 | 1회 | skip | ~1.5시간 | 최소 실행 |
+
+**기본값은 `tight`다.** 사용자가 명시적으로 다른 mode를 지정하지 않으면 `tight`로 실행한다.
+
+`tight` mode 규칙:
+- swarm branch: **기본 3** (stage-specific downshift 조건이 없으면 3)
+- critique: **2회 유지** (품질 보호)
+- research: **focused** (핵심 query family만, full coverage 대신 decision-class 기반)
+- build MVP: **core workflow 1개 + happy path** 중심
+
+### 0.4 Time Budget
+
+<MANDATORY>
+`tight` mode (~5시간) 기준 stage별 시간 배분:
+
+| Stage | 목표 | 상한 | 비고 |
+|-------|------|------|------|
+| intake | ~10분 | 15분 | lightweight, 빠르게 |
+| problem | ~25분 | 35분 | research + 3-branch + 2 critique |
+| solution | ~25분 | 35분 | 3-branch + 2 critique |
+| design | ~35분 | 45분 | research + 3-branch + 2 critique + contract |
+| build | ~120분 | 150분 | scaffold + implement + verify |
+| marketing | ~25분 | 35분 | research + 3-branch + 2 critique |
+| pitch | ~30분 | 40분 | research + 2 critique + HTML 생성 |
+| **합계** | **~270분** | **~355분 (≈6h)** | |
+
+**시간 초과 방지:**
+- 각 stage에서 **상한에 근접하면** scope를 줄이되 산출물 구조는 유지한다
+- build에서 시간이 부족하면: optional polish 제거 → animation 제거 → page 수 축소 순서
+- 절대로 stage를 건너뛰지 않는다
+
+**너무 빠른 완료 방지:**
+- 각 stage에서 method-plan artifact가 비어 있으면 진행하지 않는다
+- critique round를 생략하지 않는다 (tight에서도 2회 mandatory)
+- build에서 verification baseline을 생략하지 않는다
+</MANDATORY>
+
+### 0.5 Preflight Review
 
 실행 전 간단한 체크:
 
@@ -126,6 +172,7 @@ digraph ralph_loop {
 ```
 📋 Tacigent Run: [productName]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
+Mode: [executionMode] (~[목표시간])
 
 입력 요약:
 - intake: [요약]
