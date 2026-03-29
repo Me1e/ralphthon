@@ -40,7 +40,6 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 **/dist
-.tacigent/
 
 # IDE / Editor
 .vscode/*
